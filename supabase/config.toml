@@ -1,1 +1,7 @@
 project_id = "eclhwipxhplhvebjslra"
+
+[functions.check-symptoms]
+verify_jwt = false
+
+[functions.get-history]
+verify_jwt = false
