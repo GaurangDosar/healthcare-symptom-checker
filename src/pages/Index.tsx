@@ -6,7 +6,7 @@ import { DisclaimerBanner } from "@/components/DisclaimerBanner";
 import { SymptomForm } from "@/components/SymptomForm";
 import { ResultsView } from "@/components/ResultsView";
 import { HistoryView } from "@/components/HistoryView";
-import { supabase } from "@/integrations/supabase/client-local";
+import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import type { SymptomCheckRequest, SymptomCheckResponse } from "@/types/symptom";
 

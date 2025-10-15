@@ -24,9 +24,9 @@ if (!GEMINI_API_KEY) {
   process.exit(1);
 }
 
-const DISCLAIMER = "DISCLAIMER: This tool provides educational information only and is not medical advice. If you are experiencing severe or life-threatening symptoms, seek emergency medical care immediately.";
+const DISCLAIMER = "DISCLAIMER: This tool provides educational information only and is not medical advice. It does not replace a consultation with a licensed healthcare professional. If you are experiencing severe or life-threatening symptoms (e.g., chest pain, severe difficulty breathing, sudden weakness, uncontrolled bleeding), seek emergency medical care immediately.";
 
-// Build the medical prompt
+// Build the medical prompt with few-shot example (MATCHES Supabase Edge Function)
 function buildPrompt(symptoms, age, sex) {
   const demographicInfo = age || sex 
     ? `Patient demographics: ${age ? `Age ${age}` : ''}${age && sex ? ', ' : ''}${sex || ''}.`
@@ -37,17 +37,46 @@ function buildPrompt(symptoms, age, sex) {
 RULES:
 1. Provide up to 4 possible conditions ranked most→least likely
 2. For each condition provide: name, 1-2 sentence justification, confidence_score (0..1), and probability_rank (1..4)
-3. Provide recommended_next_steps list focusing on triage and safe high-level guidance
-4. If symptoms indicate emergency red-flags, include explicit emergency instruction
-5. If input is insufficient, fill needed_info with at most two clarifying questions
-6. Output MUST be valid JSON only - no extra prose
+3. Provide recommended_next_steps list focusing on triage and safe high-level guidance (no prescriptions, no dosing)
+4. If symptoms indicate emergency red-flags (chest pain, severe difficulty breathing, sudden weakness, unresponsiveness, high fever >40°C, severe bleeding), include explicit emergency instruction
+5. If input is insufficient, fill needed_info array with at most two clarifying questions
+6. ALWAYS include the exact disclaimer text
+7. Output MUST be valid JSON only matching the schema below - no extra prose
+
+FEW-SHOT EXAMPLE:
+Input: {"symptoms":"runny nose, sneezing, itchy eyes for 2 days. No fever. Started after visiting park.","age":28,"sex":"female"}
+
+Output:
+{
+  "conditions": [
+    {
+      "name": "Allergic rhinitis",
+      "probability_rank": 1,
+      "confidence_score": 0.75,
+      "reasoning": "Itchy eyes and sneezing shortly after park exposure suggest an allergic trigger."
+    },
+    {
+      "name": "Viral upper respiratory infection (common cold)",
+      "probability_rank": 2,
+      "confidence_score": 0.2,
+      "reasoning": "Runny nose can occur with viral infections; absence of fever makes this less likely."
+    }
+  ],
+  "recommended_next_steps": [
+    "Consider OTC antihistamine after checking with a pharmacist or clinician if you have chronic conditions.",
+    "If symptoms worsen or fever develops, consult a primary care provider."
+  ],
+  "needed_info": null,
+  "disclaimer": "${DISCLAIMER}"
+}
 
 JSON SCHEMA:
 {
   "conditions": [{"name": string, "probability_rank": number, "confidence_score": number, "reasoning": string}],
   "recommended_next_steps": [string],
   "needed_info": [string] | null,
-  "disclaimer": string
+  "disclaimer": string,
+  "llm_metadata": {"provider": string, "model": string, "prompt_version": string}
 }
 
 NOW ANALYZE THIS CASE:
