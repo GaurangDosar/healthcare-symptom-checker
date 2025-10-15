@@ -16,6 +16,7 @@ Note that this project is serverless since we are using Supabase Edge functions.
 
 
 ---**⚠️ Disclaimer:** This is for educational purposes only, not medical advice. For emergencies, call your local emergency services.A simple web app to check symptoms and get possible conditions. Built with React, Supabase, and Gemini AI.
+Also the history functional is open to see for every user just for demo. Later each user can its own history.
 
 
 
@@ -23,6 +24,7 @@ Note that this project is serverless since we are using Supabase Edge functions.
 
 
 ## 📺 Demo Video
+unmute the video before playing..
 https://github.com/user-attachments/assets/e06dcb0e-a3b6-4ebd-a036-31220dce5942
 
 
