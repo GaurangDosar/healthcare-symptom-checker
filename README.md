@@ -30,7 +30,7 @@ A web app that analyzes symptoms using AI and provides possible conditions with 
 
 - Privacy-focused (PII automatically redacted)
 
-- Mobile-responsive design## Features## How to UseAn AI-powered symptom checker that helps users understand potential health conditions. Uses Google Gemini AI to analyze symptoms and provide educational information.
+- Mobile-responsive design
 
 
 
@@ -38,7 +38,6 @@ A web app that analyzes symptoms using AI and provides possible conditions with 
 
 
 
-## Quick Start- AI-powered symptom analysis with confidence scores
 
 
 
@@ -148,15 +147,7 @@ Returns stored query history (consent-based).### 2. Install Dependencies
 
 
 
-Gaurang Dosar - [GitHub](https://github.com/GaurangDosar)- 💾 **Query History** - Stores anonymized queries (with user consent)
-
-
-
 ---Create a `.env` file in the root directory:
-
-
-
-Built with React + Supabase + Gemini AI- 🔒 **Privacy-Focused** - PII redaction for stored data- ✅ Provides educational information about possible health conditions
 
 
 ```env
@@ -194,7 +185,7 @@ npm run dev
 
 ```
 
-### Prerequisites
+
 
 Visit: `http://localhost:8080`
 
@@ -244,9 +235,6 @@ Visit: `http://localhost:8080`
 - **Icons:** Lucide React### 2. Install Dependencies
 
 - **Animations:** CSS transitions + Tailwind CSS
-
-- **Date Handling:** date-fns- 📊 **Ranked Conditions** - Displays possible conditions with confidence scores and reasoningThis tool is for **informational purposes only** and is **not medical advice**. Always consult with qualified healthcare professionals for medical concerns. If you're experiencing a medical emergency, call your local emergency services immediately.
-
 
 
 ---
@@ -305,34 +293,6 @@ healthcare-symptom-checker/
 ├── .env.example           # Environment template
 
 └── package.json           # Dependencies**Get your Supabase credentials:**
-
-```
-
-1. Go to [Supabase Dashboard](https://supabase.com/dashboard)- 🌓 **Dark Mode** - Automatic theme detection and switching## 🚀 Quick Start
-
----
-
-2. Select your project → Settings → API
-
-## 🔒 Security & Privacy
-
-3. Copy Project URL and anon/public key- 🎨 **Modern UI** - Built with Tailwind CSS and shadcn/ui components
-
-### Data Protection
-
-- ✅ No hardcoded API keys (environment variables only)
-
-- ✅ PII redaction (emails, phones, SSNs) before database storage
-
-- ✅ Consent-based query storage (opt-in only)### 4. Set Up Database (Optional - for history feature)- ✨ **Smooth Animations** - Polished interactions and transitionsA web application that accepts free-text symptom descriptions and optional demographics (age, sex), calls an LLM to generate a ranked list of probable conditions with conservative reasoning and triage advice, stores anonymized query history (with user consent), and displays results with prominent safety disclaimers.
-
-- ✅ Row Level Security (RLS) policies on database
-
-- ✅ HTTPS enforced for all API calls
-
-- ✅ CORS properly configured
-
-
 
 ```
 
