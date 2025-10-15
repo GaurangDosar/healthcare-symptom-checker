@@ -82,12 +82,13 @@ Create a `.env` file in the root:## Setup
 
 
 ```env```bash
-
+```
 VITE_SUPABASE_URL=your_supabase_url
 
 VITE_SUPABASE_PUBLISHABLE_KEY=your_supabase_keygit clone https://github.com/GaurangDosar/triage-tool.git
 
 GEMINI_API_KEY=your_gemini_key
+```
 
 cd triage-tool
 
