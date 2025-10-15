@@ -6,11 +6,11 @@ A web app that analyzes symptoms using AI and provides possible conditions with 
 
 
 
-🌐 **Live Demo:** [[Your deployed URL here](https://healthcare-symptom-checker-new.vercel.app/)]A web app that analyzes symptoms using AI and provides possible conditions with next steps. Built with React, TypeScript, Supabase, and Google Gemini AI.
+🌐 **Live Demo:** [[Click here](https://healthcare-symptom-checker-new.vercel.app/)]A web app that analyzes symptoms using AI and provides possible conditions with next steps. Built with React, TypeScript, Supabase, and Google Gemini AI.
 
 
 
-**⚠️ Disclaimer:** This is for educational purposes only, not medical advice. For emergencies, call your local emergency services.
+
 
 
 
@@ -54,7 +54,7 @@ A web app that analyzes symptoms using AI and provides possible conditions with 
 
 
 
-### Installation2. **Submit** to get possible conditions and next steps
+### Installation
 
 
 
@@ -169,23 +169,8 @@ GEMINI_API_KEY=your_gemini_api_key### User Experience- ❌ Does NOT replace cons
 
 ```
 
-- 📱 **Responsive Design** - Works seamlessly on desktop, tablet, and mobile
-
-**Get your Supabase credentials:**
-
-1. Go to [Supabase Dashboard](https://supabase.com/dashboard)- 🌓 **Dark Mode** - Automatic theme detection and switching- ❌ Should NOT be used for medical diagnosis or treatment decisions
-
-2. Select your project → Settings → API
-
-3. Copy Project URL and anon/public key- 🎨 **Modern UI** - Built with Tailwind CSS and shadcn/ui components
 
 
-
-### 4. Set Up Database (Optional - for history feature)- ✨ **Smooth Animations** - Polished interactions and transitions- ❌ Is NOT suitable for emergency medical situations![React](https://img.shields.io/badge/Frontend-React%2018-blue)This application:
-
-
-
-See [DATABASE_SETUP.md](./DATABASE_SETUP.md) for complete instructions.- 📖 **Expandable History** - Click-to-expand query cards with pagination (5 per page)
 
 
 
@@ -199,7 +184,7 @@ See [DATABASE_SETUP.md](./DATABASE_SETUP.md) for complete instructions.- 📖 **
 
 **If you are experiencing severe or life-threatening symptoms (chest pain, severe difficulty breathing, sudden weakness, uncontrolled bleeding), seek emergency medical care immediately by calling your local emergency services.**![TypeScript](https://img.shields.io/badge/Language-TypeScript-blue)- Provides educational information about possible health conditions
 
-### 5. Run Development Server
+###  Run Development Server
 
 ## 🚀 Quick Start
 
@@ -347,44 +332,6 @@ healthcare-symptom-checker/
 
 - ✅ CORS properly configured
 
-See [DATABASE_SETUP.md](./DATABASE_SETUP.md) for complete instructions.- 📖 **Expandable History** - Click-to-expand query cards with pagination (5 per page)
-
-### Privacy Features
-
-- No user authentication required (anonymous usage)
-
-- No tracking or analytics by default
-
-- Query history only stored with explicit consent**Quick steps:**### Prerequisites
-
-- Data can be viewed by all users (demo configuration - see note below)
-
-1. Run the SQL migration in Supabase SQL Editor
-
-**⚠️ Production Note:** For production deployments, update database policies to restrict query access to individual users only.
-
-2. Deploy the `check-symptoms` Edge Function---
-
----
-
-3. Deploy the `get-history` Edge Function
-
-## 📊 How It Works
-
-- Node.js 18+## 🏗️ Tech Stack
-
-## 🧪 API Reference
-
-
-### Edge Function: check-symptoms
-
-
-**Endpoint:** `https://your-project.supabase.co/functions/v1/check-symptoms`
-
-
-**Method:** POST
-
-- **Animations:** CSS transitions + Tailwind CSS
 
 
 ```
