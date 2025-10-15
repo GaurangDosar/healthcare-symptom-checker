@@ -19,6 +19,22 @@ Note that this project is serverless since we are using Supabase Edge functions.
 
 
 
+
+
+
+## 📺 Demo Video
+
+[![Watch Demo](https://img.youtube.com/vi/AI2LlhanYw8/maxresdefault.jpg)](https://youtu.be/AI2LlhanYw8)
+
+*Click the image above to watch the full demo*
+
+
+
+## Features
+...
+
+
+
 ## Features
 
 
