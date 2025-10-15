@@ -1,96 +1,190 @@
-# Healthcare Symptom Checker# Healthcare Symptom Checker# Healthcare Symptom Checker 🏥# Healthcare Symptom Checker 🏥# Healthcare Symptom Checker 🏥# Healthcare Symptom Checker 🏥# Healthcare Symptom Checker
+# Healthcare Symptom Checker# Healthcare Symptom Checker# Healthcare Symptom Checker# Healthcare Symptom Checker 🏥# Healthcare Symptom Checker 🏥# Healthcare Symptom Checker 🏥# Healthcare Symptom Checker 🏥# Healthcare Symptom Checker
 
 
 
-A simple web app to check symptoms and get possible conditions. Built with React, Supabase, and Gemini AI.
+A web app that analyzes symptoms using AI and provides possible conditions with next steps. Built with React, TypeScript, Supabase, and Google Gemini AI.
 
 
 
-## How to UseAn AI-powered symptom checker that helps users understand potential health conditions. Uses Google Gemini AI to analyze symptoms and provide educational information.
+**⚠️ Disclaimer:** This is for educational purposes only, not medical advice. For emergencies, call your local emergency services.A simple web app to check symptoms and get possible conditions. Built with React, Supabase, and Gemini AI.
 
 
 
-1. **Enter your symptoms** (and optionally age/sex)
+---
+
+
+
+## Features## How to UseAn AI-powered symptom checker that helps users understand potential health conditions. Uses Google Gemini AI to analyze symptoms and provide educational information.
+
+
+
+- AI-powered symptom analysis with confidence scores
+
+- Emergency symptom detection
+
+- Query history (optional, consent-based)1. **Enter your symptoms** (and optionally age/sex)
+
+- Privacy-focused (PII automatically redacted)
 
 2. **Submit** to get possible conditions and next steps
 
+---
+
 3. **History**: If you give consent, your query is saved (for demo, all history is public)**⚠️ Important:** This is an educational tool only. Always consult healthcare professionals for medical advice.**Developer:** Gaurang Dosar  
 
+## Quick Start
 
+
+
+**1. Clone and install:**
 
 ## Setup
-
-
-
-Clone this repo:## Features**AI Model:** Google Gemini 2.5 Flash  
-
-
 
 ```bash
 
 git clone https://github.com/GaurangDosar/triage-tool.git
 
-cd triage-tool- AI-powered symptom analysis with confidence scores**Status:** ✅ Live on Supabase**Developer:** Gaurang Dosar  
+cd triage-tool
 
-npm install
-
-```- Emergency symptom detection
-
-
-
-Add a `.env` file with your Supabase and Gemini API keys:- Query history with privacy controls
-
-
-
-```- Mobile-friendly design
-
-VITE_SUPABASE_URL=your_supabase_url
-
-VITE_SUPABASE_PUBLISHABLE_KEY=your_supabase_key**AI Model:** Google Gemini 2.5 Flash  
-
-GEMINI_API_KEY=your_gemini_key
+npm installClone this repo:## Features**AI Model:** Google Gemini 2.5 Flash  
 
 ```
 
 
 
-Run the dev server:## Setup
+**2. Set up environment:**
+
+```bash
+
+Create a `.env` file in the root:
+
+git clone https://github.com/GaurangDosar/triage-tool.git
+
+```env
+
+VITE_SUPABASE_URL=your_supabase_urlcd triage-tool- AI-powered symptom analysis with confidence scores**Status:** ✅ Live on Supabase**Developer:** Gaurang Dosar  
+
+VITE_SUPABASE_PUBLISHABLE_KEY=your_supabase_key
+
+GEMINI_API_KEY=your_gemini_keynpm install
+
+```
+
+```- Emergency symptom detection
+
+Get Supabase credentials from [Dashboard](https://supabase.com/dashboard) → Settings → API
 
 
+
+**3. Run locally:**
+
+Add a `.env` file with your Supabase and Gemini API keys:- Query history with privacy controls
 
 ```bash
 
 npm run dev
 
+```
+
+```- Mobile-friendly design
+
+Open http://localhost:8080
+
+VITE_SUPABASE_URL=your_supabase_url
+
+---
+
+VITE_SUPABASE_PUBLISHABLE_KEY=your_supabase_key**AI Model:** Google Gemini 2.5 Flash  
+
+## Database Setup (Optional)
+
+GEMINI_API_KEY=your_gemini_key
+
+For the history feature:
+
+```
+
+1. Run the SQL migration in `supabase/migrations/` via Supabase Dashboard
+
+2. Deploy Edge Functions from `supabase/functions/`:
+
+   - `check-symptoms` - Analyzes symptoms
+
+   - `get-history` - Retrieves historyRun the dev server:## Setup
+
+
+
+---
+
+
+
+## Deployment```bash
+
+
+
+- **Frontend:** Vercel, Netlify, or any static hostnpm run dev
+
+- **Backend:** Supabase Edge Functions (already configured)
+
 ```### PrerequisitesAn AI-powered healthcare symptom checker that helps users understand potential conditions based on their symptoms. Built with React, TypeScript, and Google Gemini API.**Status:** ✅ Live on Supabase**Developer:** Gaurang Dosar  
 
+---
 
+
+
+## Tech Stack
 
 Open [localhost:8080](http://localhost:8080)
 
+- React 18 + TypeScript
 
+- Vite
 
-## Deployment- Node.js 18+
+- Tailwind CSS + shadcn/ui
 
+- Supabase (Edge Functions + PostgreSQL)## Deployment- Node.js 18+
 
+- Google Gemini 2.5 Flash
 
-- **Frontend**: Vercel, Netlify, or any static host- Supabase account
-
-- **Backend**: Supabase Edge Functions (see `supabase/functions/`)
-
-- Google Gemini API key---
-
-## Privacy
+- TanStack Query
 
 
 
-- No personal info stored (emails, phones, etc. are redacted)
-
-- All history is public for demo purposes### Installation
+---- **Frontend**: Vercel, Netlify, or any static host- Supabase account
 
 
+
+## Privacy- **Backend**: Supabase Edge Functions (see `supabase/functions/`)
+
+
+
+- No PII stored (emails, phones, SSNs redacted)- Google Gemini API key---
+
+- Query history only with consent
+
+- Public database policy for demo (⚠️ update for production)## Privacy
+
+
+
+---
+
+
+
+## Author- No personal info stored (emails, phones, etc. are redacted)
+
+
+
+**Gaurang Dosar**  - All history is public for demo purposes### Installation
+
+GitHub: [@GaurangDosar](https://github.com/GaurangDosar)
+
+
+
+---
 
 ## Author
+
+Built with React + Supabase + Gemini AI
 
 
 
