@@ -32,10 +32,6 @@ https://github.com/user-attachments/assets/e06dcb0e-a3b6-4ebd-a036-31220dce5942
 
 
 
-## Features
-...
-
-
 
 ## Features
 
