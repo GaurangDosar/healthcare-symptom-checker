@@ -6,7 +6,7 @@ A web app that analyzes symptoms using AI and provides possible conditions with 
 
 
 
-🌐 **Live Demo:** [Your deployed URL here]A web app that analyzes symptoms using AI and provides possible conditions with next steps. Built with React, TypeScript, Supabase, and Google Gemini AI.
+🌐 **Live Demo:** [[Your deployed URL here](https://healthcare-symptom-checker-new.vercel.app/)]A web app that analyzes symptoms using AI and provides possible conditions with next steps. Built with React, TypeScript, Supabase, and Google Gemini AI.
 
 
 
