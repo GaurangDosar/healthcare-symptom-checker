@@ -1,10 +1,24 @@
 // Test script to verify get-history Edge Function
 // Run with: node test-history.js
 
-import 'dotenv/config';
+import { readFileSync } from 'fs';
 
-const SUPABASE_URL = process.env.VITE_SUPABASE_URL;
-const SUPABASE_ANON_KEY = process.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+// Read .env file manually
+const envFile = readFileSync('.env', 'utf8');
+const envVars = {};
+envFile.split('\n').forEach(line => {
+  const match = line.match(/^([^=]+)=(.*)$/);
+  if (match) {
+    const key = match[1].trim();
+    let value = match[2].trim();
+    // Remove quotes
+    value = value.replace(/^["']|["']$/g, '');
+    envVars[key] = value;
+  }
+});
+
+const SUPABASE_URL = envVars.VITE_SUPABASE_URL;
+const SUPABASE_ANON_KEY = envVars.VITE_SUPABASE_PUBLISHABLE_KEY;
 
 async function testGetHistory() {
   console.log('\n🧪 Testing get-history Edge Function...\n');

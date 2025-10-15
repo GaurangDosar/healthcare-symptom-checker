@@ -2,12 +2,17 @@ import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { History, Loader2, AlertCircle } from "lucide-react";
+import { History, Loader2, AlertCircle, ChevronDown, ChevronUp, ChevronLeft, ChevronRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import type { QueryHistory } from "@/types/symptom";
 import { format } from "date-fns";
+import { useState, useRef, useEffect, useMemo } from "react";
+
+const ITEMS_PER_PAGE = 5;
 
 export const HistoryView = () => {
+  const [expandedQuery, setExpandedQuery] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
   const { data, isLoading, error } = useQuery({
     queryKey: ['symptom-history'],
     queryFn: async () => {
@@ -91,66 +96,252 @@ export const HistoryView = () => {
     );
   }
 
+  // Pagination calculations
+  const totalPages = Math.ceil(data.length / ITEMS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const currentPageData = data.slice(startIndex, endIndex);
+
+  // Reset to page 1 if current page is out of bounds
+  if (currentPage > totalPages && totalPages > 0) {
+    setCurrentPage(1);
+  }
+
   return (
     <div className="w-full max-w-4xl mx-auto space-y-6">
       <Card className="shadow-lg" style={{ boxShadow: 'var(--shadow-medical)' }}>
         <CardHeader>
-          <CardTitle className="text-2xl flex items-center gap-2">
-            <History className="h-6 w-6 text-primary" />
-            Query History
-          </CardTitle>
-          <CardDescription>
-            Anonymized records of your previous symptom checks
-          </CardDescription>
+          <div className="flex items-center justify-between flex-wrap gap-4">
+            <div className="space-y-2">
+              <CardTitle className="text-2xl flex items-center gap-2">
+                <History className="h-6 w-6 text-primary" />
+                Query History
+              </CardTitle>
+              <CardDescription>
+                Anonymized records of your previous symptom checks
+              </CardDescription>
+              <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900 rounded-md p-2 mt-2">
+                <p className="text-xs text-amber-800 dark:text-amber-200">
+                  <strong>Note (Demo/Evaluation):</strong> For demonstration purposes, all queries are publicly visible. 
+                  In production, database policies should be configured to restrict access to user-specific data only.
+                </p>
+              </div>
+            </div>
+            <div className="text-sm text-muted-foreground">
+              Total: {data.length} {data.length === 1 ? 'query' : 'queries'}
+            </div>
+          </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          {data.map((query) => (
-            <Card key={query.id} className="border-l-4 border-l-primary">
-              <CardHeader>
-                <div className="flex items-start justify-between gap-4 flex-wrap">
-                  <div className="space-y-1">
-                    <CardTitle className="text-base">
-                      {query.response.conditions?.[0]?.name || 'Analysis'}
-                    </CardTitle>
-                    <CardDescription className="text-xs">
-                      {format(new Date(query.created_at), 'PPpp')}
-                      {query.age && ` • Age: ${query.age}`}
-                      {query.sex && ` • Sex: ${query.sex}`}
-                    </CardDescription>
-                  </div>
-                  <Badge variant="outline" className="bg-primary/10">
-                    {query.response.conditions?.length || 0} conditions
-                  </Badge>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  <div>
-                    <p className="text-sm font-semibold mb-1">Symptoms:</p>
-                    <p className="text-sm text-muted-foreground">{query.symptoms}</p>
-                  </div>
-                  {query.response.conditions && query.response.conditions.length > 0 && (
-                    <div>
-                      <p className="text-sm font-semibold mb-2">Top Conditions:</p>
-                      <div className="space-y-1">
-                        {query.response.conditions.slice(0, 2).map((condition, idx) => (
-                          <div key={idx} className="text-sm flex items-center gap-2">
-                            <Badge variant="secondary" className="text-xs">
-                              #{condition.probability_rank}
-                            </Badge>
-                            <span>{condition.name}</span>
-                            <span className="text-muted-foreground text-xs">
-                              ({(condition.confidence_score * 100).toFixed(0)}%)
-                            </span>
+          {currentPageData.map((query) => {
+            const isExpanded = expandedQuery === query.id;
+            
+            return (
+              <Card 
+                key={query.id} 
+                className="border-l-4 border-l-primary transition-all duration-300 hover:shadow-lg overflow-hidden"
+              >
+                <div 
+                  className="cursor-pointer select-none"
+                  onClick={() => setExpandedQuery(isExpanded ? null : query.id)}
+                >
+                      <CardHeader>
+                        <div className="flex items-start justify-between gap-4 flex-wrap">
+                          <div className="space-y-1 flex-1">
+                            <div className="flex items-center gap-2">
+                              <CardTitle className="text-base">
+                                {query.response.conditions?.[0]?.name || 'Analysis'}
+                              </CardTitle>
+                              {isExpanded ? (
+                                <ChevronUp className="h-4 w-4 text-muted-foreground" />
+                              ) : (
+                                <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                              )}
+                            </div>
+                            <CardDescription className="text-xs">
+                              {format(new Date(query.created_at), 'PPpp')}
+                              {query.age && ` • Age: ${query.age}`}
+                              {query.sex && ` • Sex: ${query.sex}`}
+                            </CardDescription>
                           </div>
-                        ))}
-                      </div>
+                          <Badge variant="outline" className="bg-primary/10">
+                            {query.response.conditions?.length || 0} conditions
+                          </Badge>
+                        </div>
+                      </CardHeader>
+                      
+                      <CardContent>
+                        <div className="space-y-3">
+                          {/* Symptoms Preview */}
+                          <div>
+                            <p className="text-sm font-semibold mb-1">Symptoms:</p>
+                            <p className="text-sm text-muted-foreground">
+                              {query.symptoms.substring(0, 100)}{query.symptoms.length > 100 ? '...' : ''}
+                            </p>
+                          </div>
+
+                          {/* Top Conditions Preview */}
+                          {query.response.conditions && query.response.conditions.length > 0 && (
+                            <div>
+                              <p className="text-sm font-semibold mb-2">Top Conditions:</p>
+                              <div className="space-y-1">
+                                {query.response.conditions.slice(0, 2).map((condition, idx) => (
+                                  <div key={idx} className="text-sm flex items-center gap-2">
+                                    <Badge variant="secondary" className="text-xs">
+                                      #{condition.probability_rank}
+                                    </Badge>
+                                    <span>{condition.name}</span>
+                                    <span className="text-muted-foreground text-xs">
+                                      ({(condition.confidence_score * 100).toFixed(0)}%)
+                                    </span>
+                                  </div>
+                                ))}
+                              </div>
+                              {query.response.conditions.length > 2 && (
+                                <p className="text-xs text-primary mt-2 font-medium">
+                                  Click to see {query.response.conditions.length - 2} more condition{query.response.conditions.length - 2 > 1 ? 's' : ''}...
+                                </p>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      </CardContent>
                     </div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+
+                <div 
+                  className={`transition-all duration-500 ease-in-out overflow-hidden ${
+                    isExpanded 
+                      ? 'max-h-[3000px] opacity-100' 
+                      : 'max-h-0 opacity-0'
+                  }`}
+                  style={{
+                    transitionProperty: 'max-height, opacity',
+                    transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+                  }}
+                >
+                  <CardContent className="pt-0">
+                    <div className="space-y-4 border-t pt-4">
+                        {/* Full Symptoms */}
+                        <div>
+                          <p className="text-sm font-semibold mb-1">Full Symptoms:</p>
+                          <p className="text-sm text-muted-foreground">{query.symptoms}</p>
+                        </div>
+
+                        {/* All Conditions */}
+                        {query.response.conditions && query.response.conditions.length > 0 && (
+                          <div>
+                            <p className="text-base font-semibold mb-3">All Possible Conditions:</p>
+                            <div className="space-y-3">
+                              {query.response.conditions.map((condition, idx) => (
+                                <Card key={idx} className="bg-muted/30 border-muted">
+                                  <CardContent className="pt-4">
+                                    <div className="flex items-start justify-between gap-3 mb-2 flex-wrap">
+                                      <div className="flex items-center gap-2">
+                                        <Badge variant="secondary">
+                                          #{condition.probability_rank}
+                                        </Badge>
+                                        <span className="font-semibold">{condition.name}</span>
+                                      </div>
+                                      <Badge variant="outline">
+                                        {(condition.confidence_score * 100).toFixed(0)}% confidence
+                                      </Badge>
+                                    </div>
+                                    <p className="text-sm text-muted-foreground">
+                                      {condition.reasoning}
+                                    </p>
+                                  </CardContent>
+                                </Card>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Recommended Next Steps */}
+                        {query.response.recommended_next_steps && query.response.recommended_next_steps.length > 0 && (
+                          <div>
+                            <p className="text-base font-semibold mb-3">Recommended Next Steps:</p>
+                            <ul className="space-y-2">
+                              {query.response.recommended_next_steps.map((step, idx) => (
+                                <li key={idx} className="text-sm flex gap-2">
+                                  <span className="text-primary font-semibold min-w-[1.5rem]">{idx + 1}.</span>
+                                  <span>{step}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+
+                        {/* Additional Info if needed */}
+                        {query.response.needed_info && (
+                          <div>
+                            <p className="text-base font-semibold mb-2">Additional Information Needed:</p>
+                            <ul className="space-y-1">
+                              {(Array.isArray(query.response.needed_info) 
+                                ? query.response.needed_info 
+                                : [query.response.needed_info]
+                              ).map((info, idx) => (
+                                <li key={idx} className="text-sm text-muted-foreground">• {info}</li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+
+                        {/* Disclaimer */}
+                        {query.response.disclaimer && (
+                          <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900 rounded-md p-3">
+                            <p className="text-xs text-muted-foreground">
+                              {query.response.disclaimer}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    </CardContent>
+                  </div>
+                </Card>
+            );
+          })}
+
+          {/* Pagination Controls */}
+          {totalPages > 1 && (
+            <div className="flex items-center justify-between pt-6 border-t">
+              <div className="text-sm text-muted-foreground">
+                Page {currentPage} of {totalPages}
+                <span className="ml-2">
+                  (Showing {startIndex + 1}-{Math.min(endIndex, data.length)} of {data.length})
+                </span>
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setCurrentPage(prev => Math.max(1, prev - 1));
+                    setExpandedQuery(null);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  disabled={currentPage === 1}
+                  className="gap-1"
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                  Previous
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setCurrentPage(prev => Math.min(totalPages, prev + 1));
+                    setExpandedQuery(null);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  disabled={currentPage === totalPages}
+                  className="gap-1"
+                >
+                  Next
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>
