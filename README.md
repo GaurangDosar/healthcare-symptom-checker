@@ -1,412 +1,822 @@
-# Healthcare Symptom Checker 🏥# Healthcare Symptom Checker
+# Healthcare Symptom Checker 🏥# Healthcare Symptom Checker 🏥# Healthcare Symptom Checker
 
 
 
-**Author**: Gaurang Dosar  **Developer:** Gaurang Dosar
+**Developer:** Gaurang Dosar  
 
-**AI Model**: Google Gemini 2.5 Flash  
+**AI Model:** Google Gemini 2.5 Flash  
 
-**Status**: ✅ Live on SupabaseAn educational symptom checker application built with React, TypeScript, and Google Gemini API.
-
-
-
-A modern, AI-powered healthcare symptom checker that helps users understand potential conditions based on their symptoms. Built with React, TypeScript, and Google's Gemini API.## ⚠️ Important Medical Disclaimer
+**Status:** ✅ Live on Supabase**Author**: Gaurang Dosar  **Developer:** Gaurang Dosar
 
 
 
-![Status](https://img.shields.io/badge/Status-Live-success)**This tool is for educational purposes only and does not provide medical advice.**
+![React](https://img.shields.io/badge/React-18-blue) ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue) ![Supabase](https://img.shields.io/badge/Supabase-Integrated-green)**AI Model**: Google Gemini 2.5 Flash  
 
-![Supabase](https://img.shields.io/badge/Backend-Supabase-green)
 
-![React](https://img.shields.io/badge/Frontend-React%2018-blue)This application:
 
-![TypeScript](https://img.shields.io/badge/Language-TypeScript-blue)- Provides educational information about possible health conditions
+An AI-powered healthcare symptom checker that helps users understand potential conditions based on their symptoms. Built with React, TypeScript, and Google Gemini API.**Status**: ✅ Live on SupabaseAn educational symptom checker application built with React, TypeScript, and Google Gemini API.
 
-- Does NOT replace consultation with licensed healthcare professionals
 
-## ⚠️ Important Disclaimer- Should NOT be used for medical diagnosis or treatment decisions
-
-- Is NOT suitable for emergency medical situations
-
-This tool is for **informational purposes only** and is **not medical advice**. Always consult with qualified healthcare professionals for medical concerns. If you're experiencing a medical emergency, call your local emergency services immediately.
-
-**If you are experiencing severe or life-threatening symptoms (chest pain, severe difficulty breathing, sudden weakness, uncontrolled bleeding), seek emergency medical care immediately.**
 
 ---
 
-## 🎯 Project Summary
 
-## 🚀 Quick Start
 
-A web application that accepts free-text symptom descriptions and optional demographics (age, sex), calls an LLM to generate a ranked list of probable conditions with conservative reasoning and triage advice, stores anonymized query history (with user consent), and displays results with prominent safety disclaimers.
+## ⚠️ Important Medical DisclaimerA modern, AI-powered healthcare symptom checker that helps users understand potential conditions based on their symptoms. Built with React, TypeScript, and Google's Gemini API.## ⚠️ Important Medical Disclaimer
+
+
+
+**This tool is for educational purposes only and does not provide medical advice.**
+
+
+
+This application:![Status](https://img.shields.io/badge/Status-Live-success)**This tool is for educational purposes only and does not provide medical advice.**
+
+- ✅ Provides educational information about possible health conditions
+
+- ❌ Does NOT replace consultation with licensed healthcare professionals![Supabase](https://img.shields.io/badge/Backend-Supabase-green)
+
+- ❌ Should NOT be used for medical diagnosis or treatment decisions
+
+- ❌ Is NOT suitable for emergency medical situations![React](https://img.shields.io/badge/Frontend-React%2018-blue)This application:
+
+
+
+**If you are experiencing severe or life-threatening symptoms (chest pain, severe difficulty breathing, sudden weakness, uncontrolled bleeding), seek emergency medical care immediately by calling your local emergency services.**![TypeScript](https://img.shields.io/badge/Language-TypeScript-blue)- Provides educational information about possible health conditions
+
+
+
+---- Does NOT replace consultation with licensed healthcare professionals
+
+
+
+## 🎯 Features## ⚠️ Important Disclaimer- Should NOT be used for medical diagnosis or treatment decisions
+
+
+
+### Core Functionality- Is NOT suitable for emergency medical situations
+
+- 🤖 **AI-Powered Analysis** - Uses Google Gemini 2.5 Flash for medical information processing
+
+- 📊 **Ranked Conditions** - Displays possible conditions with confidence scores and reasoningThis tool is for **informational purposes only** and is **not medical advice**. Always consult with qualified healthcare professionals for medical concerns. If you're experiencing a medical emergency, call your local emergency services immediately.
+
+- 📋 **Next Steps** - Provides prioritized recommendations for seeking care
+
+- ⚠️ **Emergency Detection** - Highlights urgent symptoms with prominent warnings**If you are experiencing severe or life-threatening symptoms (chest pain, severe difficulty breathing, sudden weakness, uncontrolled bleeding), seek emergency medical care immediately.**
+
+- 💾 **Query History** - Stores anonymized queries (with user consent)
+
+- 🔒 **Privacy-Focused** - PII redaction for stored data---
+
+
+
+### User Experience## 🎯 Project Summary
+
+- 📱 **Responsive Design** - Works seamlessly on desktop, tablet, and mobile
+
+- 🌓 **Dark Mode** - Automatic theme detection and switching## 🚀 Quick Start
+
+- 🎨 **Modern UI** - Built with Tailwind CSS and shadcn/ui components
+
+- ✨ **Smooth Animations** - Polished interactions and transitionsA web application that accepts free-text symptom descriptions and optional demographics (age, sex), calls an LLM to generate a ranked list of probable conditions with conservative reasoning and triage advice, stores anonymized query history (with user consent), and displays results with prominent safety disclaimers.
+
+- 📖 **Expandable History** - Click-to-expand query cards with pagination (5 per page)
 
 ### Prerequisites
 
+---
+
 - Node.js 18+## 🏗️ Tech Stack
-
-- Supabase account (free tier works)
-
-- Google Gemini API key ([Get one here](https://aistudio.google.com/apikey))- **Frontend**: React 18 + TypeScript + Vite
-
-- **Styling**: Tailwind CSS + shadcn/ui components
-
-### 1. Clone Repository- **Backend**: Node.js Local Server (with optional Supabase Edge Functions)
-
-- **Database**: PostgreSQL via Supabase (optional)
-
-```bash- **AI Model**: Google Gemini 2.5 Flash
-
-git clone https://github.com/GaurangDosar/triage-tool.git- **State Management**: TanStack Query
-
-cd triage-tool- **Form Handling**: React Hook Form + Zod validation
-
-```
 
 ## 🚀 Quick Start
 
+- Supabase account (free tier works)
+
+### Prerequisites
+
+- Node.js 18 or higher- Google Gemini API key ([Get one here](https://aistudio.google.com/apikey))- **Frontend**: React 18 + TypeScript + Vite
+
+- Supabase account ([Sign up free](https://supabase.com))
+
+- Google Gemini API key ([Get one here](https://aistudio.google.com/apikey))- **Styling**: Tailwind CSS + shadcn/ui components
+
+
+
+### 1. Clone Repository### 1. Clone Repository- **Backend**: Node.js Local Server (with optional Supabase Edge Functions)
+
+
+
+```bash- **Database**: PostgreSQL via Supabase (optional)
+
+git clone https://github.com/GaurangDosar/healthcare-symptom-checker.git
+
+cd healthcare-symptom-checker```bash- **AI Model**: Google Gemini 2.5 Flash
+
+```
+
+git clone https://github.com/GaurangDosar/triage-tool.git- **State Management**: TanStack Query
+
 ### 2. Install Dependencies
 
-## 📁 Project Structure
+cd triage-tool- **Form Handling**: React Hook Form + Zod validation
 
 ```bash
 
 npm install```
 
-```triage-tool/
+```
 
-├── src/
+## 🚀 Quick Start
 
-### 3. Configure Environment│   ├── components/         # React components
+### 3. Configure Environment
 
-│   ├── pages/             # Page components
+### 2. Install Dependencies
 
-```bash│   ├── integrations/      # Supabase clients
+Create a `.env` file in the root directory:
 
-cp .env.example .env│   └── types/             # TypeScript types
+## 📁 Project Structure
 
-```├── supabase/
+```env
 
-│   └── functions/         # Edge functions (for production)
-
-Edit `.env` with your credentials:├── gemini-server-simple.mjs   # Local API server
-
-├── test-gemini.js            # Test Gemini API
-
-```env└── test-local-server.js      # Test local server
-
-VITE_SUPABASE_URL=your_supabase_project_url```
+VITE_SUPABASE_URL=your_supabase_project_url```bash
 
 VITE_SUPABASE_PUBLISHABLE_KEY=your_supabase_anon_key
 
-GEMINI_API_KEY=your_gemini_api_key---
+GEMINI_API_KEY=your_gemini_api_keynpm install```
 
 ```
 
-## 🔧 Production Setup (Supabase)
+```triage-tool/
 
 **Get your Supabase credentials:**
 
-- Go to [Supabase Dashboard](https://supabase.com/dashboard)### Prerequisites
+1. Go to [Supabase Dashboard](https://supabase.com/dashboard)├── src/
 
-- Select your project → Settings → API
+2. Select your project → Settings → API
 
-- Copy Project URL and anon public key- Node.js 18+ and npm
+3. Copy Project URL and anon/public key### 3. Configure Environment│   ├── components/         # React components
 
-- OpenAI API key for GPT-4o-mini
 
-### 4. Deploy Edge Function to Supabase
 
-### Installation
+### 4. Set Up Database (Optional - for history feature)│   ├── pages/             # Page components
 
-1. Go to your Supabase Dashboard → Edge Functions
 
-2. Create new function named: `check-symptoms`1. Clone the repository:
 
-3. Copy code from: `supabase/functions/check-symptoms/index.ts````bash
+See [DATABASE_SETUP.md](./DATABASE_SETUP.md) for complete instructions.```bash│   ├── integrations/      # Supabase clients
 
-4. Deploy functiongit clone <YOUR_GIT_URL>
 
-5. Add secret: `GEMINI_API_KEY` with your Gemini API keycd <YOUR_PROJECT_NAME>
 
-```
+**Quick steps:**cp .env.example .env│   └── types/             # TypeScript types
 
-### 5. Run Locally
+1. Run the SQL migration in Supabase SQL Editor
 
-2. Install dependencies:
+2. Deploy the `check-symptoms` Edge Function```├── supabase/
 
-```bash```bash
+3. Deploy the `get-history` Edge Function
 
-npm run devnpm install
+│   └── functions/         # Edge functions (for production)
 
-``````
+### 5. Run Development Server
 
-
-
-Visit: http://localhost:8080/3. Set up environment variables:
-
-Add your Gemini API key in `gemini-server-simple.mjs`:
-
----```javascript
-
-const GEMINI_API_KEY = 'your-api-key-here';
-
-## 🏗️ Architecture```
-
-
-
-```4. Start the backend server:
-
-┌─────────────────┐```bash
-
-│   User Browser  │node gemini-server-simple.mjs
-
-└────────┬────────┘```
-
-         │
-
-         ▼5. Start the development server (in a new terminal):
-
-┌─────────────────┐```bash
-
-│  React Frontend │npm run dev
-
-│  (Vite + TS)    │```
-
-└────────┬────────┘
-
-         │The app will be available at `http://localhost:8080`
-
-         ▼
-
-┌─────────────────────────────┐## 📋 Features
-
-│   Supabase Edge Function    │
-
-│    (check-symptoms)          │### ✅ Implemented Features
-
-└────────┬────────────────────┘
-
-         │1. **Symptom Input Form**
-
-         ▼   - Free-text symptom description (10-1000 characters)
-
-┌─────────────────────────────┐   - Optional age and sex fields
-
-│   Google Gemini 2.5 Flash   │   - Real-time form validation
-
-└─────────────────────────────┘   - Privacy consent checkbox for history storage
-
-```   - Mobile-responsive design
-
-
-
-**Key Components:**2. **AI-Powered Analysis**
-
-- **Frontend**: React 18 + TypeScript + Tailwind CSS   - GPT-4o-mini integration via Edge Functions
-
-- **Backend**: Supabase Edge Functions (Deno runtime)   - Structured prompt with few-shot examples
-
-- **AI**: Google Gemini 2.5 Flash   - Returns up to 4 ranked conditions with confidence scores
-
-- **Hosting**: Supabase (backend) + Vercel/Netlify (frontend)   - Provides safe, educational next steps
-
-   - Emergency symptom detection with prominent warnings
-
----
-
-3. **Results Display**
-
-## 📊 Features   - Ranked list of possible conditions
-
-   - Confidence scores and reasoning for each condition
-
-✅ AI-powered symptom analysis     - Recommended next steps focusing on triage
-
-✅ Confidence scoring for conditions     - Emergency warnings (pulsing animation for urgent cases)
-
-✅ Prioritized next steps     - Collapsible raw JSON viewer for debugging
-
-✅ Dynamic emergency detection  
-
-✅ Responsive design + Dark mode  4. **Query History**
-
-✅ Privacy-focused (no data storage by default)     - Opt-in anonymized storage
-
-✅ Professional disclaimers     - View past symptom checks
-
-   - Timestamp and demographics display
-
----   - No PII storage (automatic redaction)
-
-
-
-## 🔒 Security5. **Safety & Privacy**
-
-   - Prominent disclaimer banner on every page
-
-### API Key Management   - Full disclaimer modal with emergency symptoms list
-
-- ✅ No API keys in source code   - PII redaction (email, phone, SSN patterns)
-
-- ✅ All secrets in environment variables   - Consent-based history storage only
-
-- ✅ `.env` excluded from Git   - Rate limiting on Edge Functions
-
-- ✅ Supabase Secrets for production
-
-## 🔧 API Documentation
-
-### Data Privacy
-
-- No PHI stored without explicit consent### POST /check-symptoms
-
-- Basic PII redaction for stored queries
-
-- CORS properly configuredAnalyzes symptoms and returns possible conditions with recommendations.
-
-- HTTPS enforced
-
-**Request Body:**
-
----```json
-
-{
-
-## 🧪 Testing  "symptoms": "headache for 3 days, mild fever, feeling tired",
-
-  "age": 28,
-
-### Test Edge Function Locally (Optional)  "sex": "female",
-
-  "consentToStore": true
-
-If you want to test with a local server:}
-
-```
+Edit `.env` with your credentials:├── gemini-server-simple.mjs   # Local API server
 
 ```bash
 
-node gemini-server-secure.mjs**Response:**
+npm run dev├── test-gemini.js            # Test Gemini API
 
-``````json
+```
 
-{
+```env└── test-local-server.js      # Test local server
 
-This runs a local server on port 3001 for testing (requires `.env` file).  "conditions": [
+Visit: http://localhost:8080
 
-    {
+VITE_SUPABASE_URL=your_supabase_project_url```
 
----      "name": "Viral upper respiratory infection",
+---
 
-      "probability_rank": 1,
+VITE_SUPABASE_PUBLISHABLE_KEY=your_supabase_anon_key
 
-## 📁 Project Structure      "confidence_score": 0.75,
+## 🏗️ Tech Stack
 
-      "reasoning": "Combination of headache, fever, and fatigue suggests viral infection..."
-
-```    }
-
-├── src/  ],
-
-│   ├── components/          # React components  "recommended_next_steps": [
-
-│   │   ├── ui/             # shadcn/ui components    "Rest and stay hydrated",
-
-│   │   ├── SymptomForm.tsx    "Monitor temperature",
-
-│   │   ├── ResultsView.tsx    "Consult primary care if symptoms worsen"
-
-│   │   └── HistoryView.tsx  ],
-
-│   ├── integrations/  "needed_info": null,
-
-│   │   └── supabase/       # Supabase client  "disclaimer": "DISCLAIMER: This tool provides educational information only...",
-
-│   ├── pages/              # Page components  "llm_metadata": {
-
-│   ├── types/              # TypeScript types    "provider": "openai",
-
-│   └── lib/                # Utilities    "model": "gpt-4o-mini",
-
-├── supabase/    "prompt_version": "1.0"
-
-│   └── functions/  }
-
-│       └── check-symptoms/ # Edge function code}
-
-├── public/                 # Static assets```
-
-├── .env.example           # Environment template
-
-├── DEPLOYMENT_SUCCESS.md  # Deployment guide### GET /get-history
-
-└── README.md              # This file
-
-```Retrieves anonymized query history.
-
-
-
----**Query Parameters:**
-
-- `limit` (optional): Number of records to return (default: 20)
-
-## 🚀 Production Deployment
-
-**Response:**
-
-### Frontend Deployment (Recommended: Vercel)```json
-
-{
-
-1. **Push to GitHub** (already done)  "queries": [
-
-    {
-
-2. **Deploy to Vercel**:      "id": "uuid",
-
-   - Go to [vercel.com](https://vercel.com)      "symptoms": "headache for 3 days...",
-
-   - Import your GitHub repository      "age": 28,
-
-   - Add environment variables:      "sex": "female",
-
-     - `VITE_SUPABASE_URL`      "response": { /* full response object */ },
-
-     - `VITE_SUPABASE_PUBLISHABLE_KEY`      "created_at": "2025-10-14T12:00:00Z"
-
-   - Deploy!    }
-
-  ]
-
-3. **Alternative Platforms**:}
-
-   - [Netlify](https://netlify.com) - Simple setup```
-
-   - [Cloudflare Pages](https://pages.cloudflare.com) - Fast CDN
-
-## 🔒 Security & Privacy
-
-### Backend (Already Deployed!)
-
-✅ Your backend is already live on Supabase Edge Functions### Data Protection
-
-
-
----1. **No PII Storage**
-
-   - Automatic redaction of emails, phone numbers, SSNs
-
-## 🛠️ Tech Stack   - No names, addresses, or identifying information stored
-
-   - Only symptoms, age, sex, and AI response are saved
+GEMINI_API_KEY=your_gemini_api_key---
 
 ### Frontend
 
+- **Framework:** React 18.3.1```
+
+- **Language:** TypeScript 5.8.3
+
+- **Build Tool:** Vite 5.4.19## 🔧 Production Setup (Supabase)
+
+- **Styling:** Tailwind CSS + shadcn/ui
+
+- **State Management:** TanStack Query 5.83.0**Get your Supabase credentials:**
+
+- **Form Handling:** React Hook Form + Zod
+
+- **Routing:** React Router 6.30.1- Go to [Supabase Dashboard](https://supabase.com/dashboard)### Prerequisites
+
+
+
+### Backend- Select your project → Settings → API
+
+- **Platform:** Supabase Edge Functions (Deno runtime)
+
+- **Database:** PostgreSQL (Supabase)- Copy Project URL and anon public key- Node.js 18+ and npm
+
+- **AI:** Google Gemini 2.5 Flash
+
+- **Authentication:** Not required (public access)- OpenAI API key for GPT-4o-mini
+
+
+
+### UI Components### 4. Deploy Edge Function to Supabase
+
+- **Component Library:** shadcn/ui (Radix UI primitives)
+
+- **Icons:** Lucide React### Installation
+
+- **Animations:** CSS transitions + Tailwind CSS
+
+- **Date Handling:** date-fns1. Go to your Supabase Dashboard → Edge Functions
+
+
+
+---2. Create new function named: `check-symptoms`1. Clone the repository:
+
+
+
+## 📁 Project Structure3. Copy code from: `supabase/functions/check-symptoms/index.ts````bash
+
+
+
+```4. Deploy functiongit clone <YOUR_GIT_URL>
+
+healthcare-symptom-checker/
+
+├── src/5. Add secret: `GEMINI_API_KEY` with your Gemini API keycd <YOUR_PROJECT_NAME>
+
+│   ├── components/          # React components
+
+│   │   ├── ui/             # shadcn/ui components```
+
+│   │   ├── SymptomForm.tsx # Main symptom input form
+
+│   │   ├── ResultsView.tsx # AI analysis results display### 5. Run Locally
+
+│   │   └── HistoryView.tsx # Query history with pagination
+
+│   ├── pages/              # Page components2. Install dependencies:
+
+│   │   ├── Index.tsx       # Main application page
+
+│   │   └── NotFound.tsx    # 404 error page```bash```bash
+
+│   ├── integrations/
+
+│   │   └── supabase/       # Supabase client configurationnpm run devnpm install
+
+│   ├── types/              # TypeScript type definitions
+
+│   ├── lib/                # Utility functions``````
+
+│   └── hooks/              # Custom React hooks
+
+├── supabase/
+
+│   ├── functions/          # Edge Functions
+
+│   │   ├── check-symptoms/ # AI symptom analysisVisit: http://localhost:8080/3. Set up environment variables:
+
+│   │   └── get-history/    # Query history retrieval
+
+│   └── migrations/         # Database schemaAdd your Gemini API key in `gemini-server-simple.mjs`:
+
+├── public/                 # Static assets
+
+├── .env                    # Environment variables (not in git)---```javascript
+
+├── .env.example           # Environment template
+
+└── package.json           # Dependenciesconst GEMINI_API_KEY = 'your-api-key-here';
+
+```
+
+## 🏗️ Architecture```
+
+---
+
+
+
+## 🔒 Security & Privacy
+
+```4. Start the backend server:
+
+### Data Protection
+
+- ✅ No hardcoded API keys (environment variables only)┌─────────────────┐```bash
+
+- ✅ PII redaction (emails, phones, SSNs) before database storage
+
+- ✅ Consent-based query storage (opt-in only)│   User Browser  │node gemini-server-simple.mjs
+
+- ✅ Row Level Security (RLS) policies on database
+
+- ✅ HTTPS enforced for all API calls└────────┬────────┘```
+
+- ✅ CORS properly configured
+
+         │
+
+### Privacy Features
+
+- No user authentication required (anonymous usage)         ▼5. Start the development server (in a new terminal):
+
+- No tracking or analytics by default
+
+- Query history only stored with explicit consent┌─────────────────┐```bash
+
+- Data can be viewed by all users (demo configuration - see note below)
+
+│  React Frontend │npm run dev
+
+**⚠️ Production Note:** For production deployments, update database policies to restrict query access to individual users only.
+
+│  (Vite + TS)    │```
+
+---
+
+└────────┬────────┘
+
+## 📊 How It Works
+
+         │The app will be available at `http://localhost:8080`
+
+### 1. User Input
+
+- User enters symptoms (10-1000 characters)         ▼
+
+- Optional: Age (0-150) and biological sex
+
+- Optional: Consent to store query anonymously┌─────────────────────────────┐## 📋 Features
+
+
+
+### 2. AI Processing│   Supabase Edge Function    │
+
+- Symptom text sent to Supabase Edge Function
+
+- Edge Function calls Google Gemini 2.5 Flash API│    (check-symptoms)          │### ✅ Implemented Features
+
+- AI generates structured medical information:
+
+  - Up to 4 possible conditions (ranked by probability)└────────┬────────────────────┘
+
+  - Confidence scores (0-1) for each condition
+
+  - Medical reasoning for each condition         │1. **Symptom Input Form**
+
+  - Recommended next steps (triage guidance)
+
+  - Emergency warnings if applicable         ▼   - Free-text symptom description (10-1000 characters)
+
+
+
+### 3. Results Display┌─────────────────────────────┐   - Optional age and sex fields
+
+- Conditions ranked by confidence
+
+- Each condition shows: name, probability rank, score, reasoning│   Google Gemini 2.5 Flash   │   - Real-time form validation
+
+- Emergency warnings highlighted with pulsing animation
+
+- Next steps displayed as prioritized list└─────────────────────────────┘   - Privacy consent checkbox for history storage
+
+- Medical disclaimer always visible
+
+```   - Mobile-responsive design
+
+### 4. Query Storage (Optional)
+
+- If user consents, query stored in Supabase PostgreSQL
+
+- PII automatically redacted before storage
+
+- Accessible in History tab with pagination (5 per page)**Key Components:**2. **AI-Powered Analysis**
+
+- Expandable cards show full analysis details
+
+- **Frontend**: React 18 + TypeScript + Tailwind CSS   - GPT-4o-mini integration via Edge Functions
+
+---
+
+- **Backend**: Supabase Edge Functions (Deno runtime)   - Structured prompt with few-shot examples
+
+## 🚀 Deployment
+
+- **AI**: Google Gemini 2.5 Flash   - Returns up to 4 ranked conditions with confidence scores
+
+### Frontend Deployment (Recommended: Vercel)
+
+- **Hosting**: Supabase (backend) + Vercel/Netlify (frontend)   - Provides safe, educational next steps
+
+1. **Push to GitHub** (already done)
+
+   - Emergency symptom detection with prominent warnings
+
+2. **Deploy to Vercel:**
+
+   - Go to [vercel.com](https://vercel.com)---
+
+   - Import your GitHub repository
+
+   - Add environment variables:3. **Results Display**
+
+     - `VITE_SUPABASE_URL`
+
+     - `VITE_SUPABASE_PUBLISHABLE_KEY`## 📊 Features   - Ranked list of possible conditions
+
+   - Deploy!
+
+   - Confidence scores and reasoning for each condition
+
+3. **Alternative Platforms:**
+
+   - [Netlify](https://netlify.com) - Simple setup✅ AI-powered symptom analysis     - Recommended next steps focusing on triage
+
+   - [Cloudflare Pages](https://pages.cloudflare.com) - Fast CDN
+
+✅ Confidence scoring for conditions     - Emergency warnings (pulsing animation for urgent cases)
+
+### Backend (Already Deployed!)
+
+✅ Backend is live on Supabase Edge Functions✅ Prioritized next steps     - Collapsible raw JSON viewer for debugging
+
+
+
+---✅ Dynamic emergency detection  
+
+
+
+## 🧪 API Reference✅ Responsive design + Dark mode  4. **Query History**
+
+
+
+### Edge Function: check-symptoms✅ Privacy-focused (no data storage by default)     - Opt-in anonymized storage
+
+
+
+**Endpoint:** `https://your-project.supabase.co/functions/v1/check-symptoms`✅ Professional disclaimers     - View past symptom checks
+
+
+
+**Method:** POST   - Timestamp and demographics display
+
+
+
+**Request Body:**---   - No PII storage (automatic redaction)
+
+```json
+
+{
+
+  "symptoms": "fever and headache for 2 days",
+
+  "age": 30,## 🔒 Security5. **Safety & Privacy**
+
+  "sex": "male",
+
+  "consentToStore": true   - Prominent disclaimer banner on every page
+
+}
+
+```### API Key Management   - Full disclaimer modal with emergency symptoms list
+
+
+
+**Response:**- ✅ No API keys in source code   - PII redaction (email, phone, SSN patterns)
+
+```json
+
+{- ✅ All secrets in environment variables   - Consent-based history storage only
+
+  "conditions": [
+
+    {- ✅ `.env` excluded from Git   - Rate limiting on Edge Functions
+
+      "name": "Viral upper respiratory infection",
+
+      "probability_rank": 1,- ✅ Supabase Secrets for production
+
+      "confidence_score": 0.75,
+
+      "reasoning": "Fever and headache are common symptoms..."## 🔧 API Documentation
+
+    }
+
+  ],### Data Privacy
+
+  "recommended_next_steps": [
+
+    "Rest and hydration",- No PHI stored without explicit consent### POST /check-symptoms
+
+    "Monitor symptoms for 48 hours"
+
+  ],- Basic PII redaction for stored queries
+
+  "needed_info": null,
+
+  "disclaimer": "DISCLAIMER: This tool provides educational information only...",- CORS properly configuredAnalyzes symptoms and returns possible conditions with recommendations.
+
+  "llm_metadata": {
+
+    "provider": "google",- HTTPS enforced
+
+    "model": "gemini-2.5-flash",
+
+    "prompt_version": "1.0"**Request Body:**
+
+  }
+
+}---```json
+
+```
+
+{
+
+### Edge Function: get-history
+
+## 🧪 Testing  "symptoms": "headache for 3 days, mild fever, feeling tired",
+
+**Endpoint:** `https://your-project.supabase.co/functions/v1/get-history`
+
+  "age": 28,
+
+**Method:** POST
+
+### Test Edge Function Locally (Optional)  "sex": "female",
+
+**Response:**
+
+```json  "consentToStore": true
+
+{
+
+  "queries": [If you want to test with a local server:}
+
+    {
+
+      "id": "uuid",```
+
+      "symptoms": "fever and headache",
+
+      "age": 30,```bash
+
+      "sex": "male",
+
+      "response": { /* AI response */ },node gemini-server-secure.mjs**Response:**
+
+      "created_at": "2024-12-15T10:30:00Z"
+
+    }``````json
+
+  ]
+
+}{
+
+```
+
+This runs a local server on port 3001 for testing (requires `.env` file).  "conditions": [
+
+---
+
+    {
+
+## 📚 Documentation
+
+---      "name": "Viral upper respiratory infection",
+
+- **[DATABASE_SETUP.md](./DATABASE_SETUP.md)** - Complete database setup guide
+
+- **[DEPLOYMENT_SUCCESS.md](./DEPLOYMENT_SUCCESS.md)** - Deployment guide and verification      "probability_rank": 1,
+
+- **[TROUBLESHOOTING.md](./TROUBLESHOOTING.md)** - Common issues and solutions
+
+- **[QUICK_COMMANDS.md](./QUICK_COMMANDS.md)** - Handy copy-paste commands## 📁 Project Structure      "confidence_score": 0.75,
+
+
+
+---      "reasoning": "Combination of headache, fever, and fatigue suggests viral infection..."
+
+
+
+## 🔧 Development```    }
+
+
+
+### Build Commands├── src/  ],
+
+
+
+```bash│   ├── components/          # React components  "recommended_next_steps": [
+
+# Development server
+
+npm run dev│   │   ├── ui/             # shadcn/ui components    "Rest and stay hydrated",
+
+
+
+# Production build│   │   ├── SymptomForm.tsx    "Monitor temperature",
+
+npm run build
+
+│   │   ├── ResultsView.tsx    "Consult primary care if symptoms worsen"
+
+# Preview production build
+
+npm run preview│   │   └── HistoryView.tsx  ],
+
+
+
+# Lint code│   ├── integrations/  "needed_info": null,
+
+npm run lint
+
+```│   │   └── supabase/       # Supabase client  "disclaimer": "DISCLAIMER: This tool provides educational information only...",
+
+
+
+### Testing│   ├── pages/              # Page components  "llm_metadata": {
+
+
+
+The application includes validation for:│   ├── types/              # TypeScript types    "provider": "openai",
+
+- ✅ Input length (10-1000 characters)
+
+- ✅ Age range (0-150)│   └── lib/                # Utilities    "model": "gpt-4o-mini",
+
+- ✅ Sex options (male, female, other)
+
+- ✅ API response structure├── supabase/    "prompt_version": "1.0"
+
+- ✅ Emergency keyword detection
+
+│   └── functions/  }
+
+---
+
+│       └── check-symptoms/ # Edge function code}
+
+## 📈 Usage Limits (Free Tier)
+
+├── public/                 # Static assets```
+
+### Gemini API
+
+- **Requests:** 1,500 per day├── .env.example           # Environment template
+
+- **Rate:** 15 requests per minute
+
+- **Tokens:** Up to 65K output tokens per request├── DEPLOYMENT_SUCCESS.md  # Deployment guide### GET /get-history
+
+
+
+### Supabase└── README.md              # This file
+
+- **Edge Function Calls:** 500,000 per month
+
+- **Edge Function Time:** 150 hours per month```Retrieves anonymized query history.
+
+- **Database Storage:** 500 MB
+
+- **Bandwidth:** 5 GB per month
+
+
+
+These limits are more than sufficient for personal projects and small-scale deployments.---**Query Parameters:**
+
+
+
+---- `limit` (optional): Number of records to return (default: 20)
+
+
+
+## 🤝 Contributing## 🚀 Production Deployment
+
+
+
+Contributions are welcome! Please:**Response:**
+
+
+
+1. Fork the repository### Frontend Deployment (Recommended: Vercel)```json
+
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+
+3. Commit your changes (`git commit -m 'Add amazing feature'`){
+
+4. Push to the branch (`git push origin feature/amazing-feature`)
+
+5. Open a Pull Request1. **Push to GitHub** (already done)  "queries": [
+
+
+
+**Important:** Never commit API keys or `.env` files!    {
+
+
+
+---2. **Deploy to Vercel**:      "id": "uuid",
+
+
+
+## 📝 License   - Go to [vercel.com](https://vercel.com)      "symptoms": "headache for 3 days...",
+
+
+
+MIT License - See LICENSE file for details   - Import your GitHub repository      "age": 28,
+
+
+
+---   - Add environment variables:      "sex": "female",
+
+
+
+## 👨‍💻 Author     - `VITE_SUPABASE_URL`      "response": { /* full response object */ },
+
+
+
+**Gaurang Dosar**     - `VITE_SUPABASE_PUBLISHABLE_KEY`      "created_at": "2025-10-14T12:00:00Z"
+
+
+
+- GitHub: [@GaurangDosar](https://github.com/GaurangDosar)   - Deploy!    }
+
+- Project: [healthcare-symptom-checker](https://github.com/GaurangDosar/healthcare-symptom-checker)
+
+  ]
+
+---
+
+3. **Alternative Platforms**:}
+
+## 🙏 Acknowledgments
+
+   - [Netlify](https://netlify.com) - Simple setup```
+
+- **Google Gemini AI** - For advanced medical information processing
+
+- **Supabase** - For serverless backend infrastructure   - [Cloudflare Pages](https://pages.cloudflare.com) - Fast CDN
+
+- **shadcn/ui** - For beautiful, accessible UI components
+
+- **Open Source Community** - For amazing tools and libraries## 🔒 Security & Privacy
+
+
+
+---### Backend (Already Deployed!)
+
+
+
+## 📞 Support✅ Your backend is already live on Supabase Edge Functions### Data Protection
+
+
+
+- **Issues:** [GitHub Issues](https://github.com/GaurangDosar/healthcare-symptom-checker/issues)
+
+- **Documentation:** See docs folder for detailed guides
+
+- **Supabase Logs:** [View Logs](https://supabase.com/dashboard)---1. **No PII Storage**
+
+
+
+---   - Automatic redaction of emails, phone numbers, SSNs
+
+
+
+## 🔗 Links## 🛠️ Tech Stack   - No names, addresses, or identifying information stored
+
+
+
+- **Live Application:** Deploy to see it in action!   - Only symptoms, age, sex, and AI response are saved
+
+- **GitHub Repository:** [healthcare-symptom-checker](https://github.com/GaurangDosar/healthcare-symptom-checker)
+
+- **Supabase Dashboard:** [Dashboard](https://supabase.com/dashboard)### Frontend
+
+- **Google Gemini API:** [API Console](https://aistudio.google.com)
+
 - **React 18** - UI framework2. **Consent-Based Storage**
+
+---
 
 - **TypeScript** - Type safety   - Users must explicitly opt-in to save queries
 
+**⚡ Built with ❤️ by Gaurang Dosar**
+
 - **Vite** - Build tool   - History is anonymized and aggregated
+
+**Remember:** This is an educational tool, not a replacement for professional medical advice!
 
 - **Tailwind CSS** - Styling   - No user accounts or authentication tracking
 
