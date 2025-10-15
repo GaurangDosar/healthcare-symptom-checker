@@ -3,6 +3,7 @@
 
 
 A web app that analyzes symptoms using AI and provides possible conditions with next steps. Built with React, TypeScript, Supabase, and Google Gemini AI.
+Note that this project is serverless since we are using Supabase Edge functions. This makes our website more responsive.
 
 
 
@@ -90,7 +91,7 @@ VITE_SUPABASE_PUBLISHABLE_KEY=your_supabase_keygit clone https://github.com/Gaur
 GEMINI_API_KEY=your_gemini_key
 ```
 
-cd triage-tool
+
 
 
 
@@ -116,8 +117,11 @@ Get your Supabase credentials from [Supabase Dashboard](https://supabase.com/das
 
 
 
-### POST /get-history- 🤖 **AI-Powered Analysis** - Uses Google Gemini 2.5 Flash for medical information processing
+### POST /check-symptoms- 
+Uses Google Gemini 2.5 Flash for medical information processing
 
+### GET /get-history
+Fetches data from PostgreSQL database
 
 
 Returns stored query history (consent-based).### 2. Install Dependencies
