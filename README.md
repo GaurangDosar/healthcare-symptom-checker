@@ -89,7 +89,7 @@ VITE_SUPABASE_PUBLISHABLE_KEY=your_supabase_keygit clone https://github.com/Gaur
 
 GEMINI_API_KEY=your_gemini_key
 
-```cd triage-tool
+cd triage-tool
 
 
 
