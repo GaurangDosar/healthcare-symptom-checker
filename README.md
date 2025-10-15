@@ -258,6 +258,7 @@ Visit: `http://localhost:8080`
 
 ---
 
+![Image](https://github.com/user-attachments/assets/05133aad-7fac-4fab-96e4-e677b54cfc32)
 
 
 ## 📁 Project Structure
