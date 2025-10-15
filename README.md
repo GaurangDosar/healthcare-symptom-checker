@@ -1,28 +1,20 @@
-# Healthcare Symptom Checker# Healthcare Symptom Checker 🏥# Healthcare Symptom Checker 🏥# Healthcare Symptom Checker 🏥# Healthcare Symptom Checker 🏥# Healthcare Symptom Checker
+# Healthcare Symptom Checker# Healthcare Symptom Checker# Healthcare Symptom Checker 🏥# Healthcare Symptom Checker 🏥# Healthcare Symptom Checker 🏥# Healthcare Symptom Checker 🏥# Healthcare Symptom Checker
 
 
 
-An AI-powered symptom checker that helps users understand potential health conditions. Uses Google Gemini AI to analyze symptoms and provide educational information.
+A simple web app to check symptoms and get possible conditions. Built with React, Supabase, and Gemini AI.
 
 
 
-**⚠️ Important:** This is an educational tool only. Always consult healthcare professionals for medical advice.**Developer:** Gaurang Dosar  
+## How to UseAn AI-powered symptom checker that helps users understand potential health conditions. Uses Google Gemini AI to analyze symptoms and provide educational information.
 
 
 
-## Features**AI Model:** Google Gemini 2.5 Flash  
+1. **Enter your symptoms** (and optionally age/sex)
 
+2. **Submit** to get possible conditions and next steps
 
-
-- AI-powered symptom analysis with confidence scores**Status:** ✅ Live on Supabase**Developer:** Gaurang Dosar  
-
-- Emergency symptom detection
-
-- Query history with privacy controls
-
-- Mobile-friendly design
-
-**AI Model:** Google Gemini 2.5 Flash  
+3. **History**: If you give consent, your query is saved (for demo, all history is public)**⚠️ Important:** This is an educational tool only. Always consult healthcare professionals for medical advice.**Developer:** Gaurang Dosar  
 
 
 
@@ -30,27 +22,89 @@ An AI-powered symptom checker that helps users understand potential health condi
 
 
 
-### PrerequisitesAn AI-powered healthcare symptom checker that helps users understand potential conditions based on their symptoms. Built with React, TypeScript, and Google Gemini API.**Status:** ✅ Live on Supabase**Developer:** Gaurang Dosar  
+Clone this repo:## Features**AI Model:** Google Gemini 2.5 Flash  
 
 
 
-- Node.js 18+
-
-- Supabase account
-
-- Google Gemini API key---
-
-
-
-### Installation
-
-
-
-```bash## ⚠️ Important Medical Disclaimer![React](https://img.shields.io/badge/React-18-blue) ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue) ![Supabase](https://img.shields.io/badge/Supabase-Integrated-green)**AI Model:** Google Gemini 2.5 Flash  
+```bash
 
 git clone https://github.com/GaurangDosar/triage-tool.git
 
+cd triage-tool- AI-powered symptom analysis with confidence scores**Status:** ✅ Live on Supabase**Developer:** Gaurang Dosar  
+
+npm install
+
+```- Emergency symptom detection
+
+
+
+Add a `.env` file with your Supabase and Gemini API keys:- Query history with privacy controls
+
+
+
+```- Mobile-friendly design
+
+VITE_SUPABASE_URL=your_supabase_url
+
+VITE_SUPABASE_PUBLISHABLE_KEY=your_supabase_key**AI Model:** Google Gemini 2.5 Flash  
+
+GEMINI_API_KEY=your_gemini_key
+
+```
+
+
+
+Run the dev server:## Setup
+
+
+
+```bash
+
+npm run dev
+
+```### PrerequisitesAn AI-powered healthcare symptom checker that helps users understand potential conditions based on their symptoms. Built with React, TypeScript, and Google Gemini API.**Status:** ✅ Live on Supabase**Developer:** Gaurang Dosar  
+
+
+
+Open [localhost:8080](http://localhost:8080)
+
+
+
+## Deployment- Node.js 18+
+
+
+
+- **Frontend**: Vercel, Netlify, or any static host- Supabase account
+
+- **Backend**: Supabase Edge Functions (see `supabase/functions/`)
+
+- Google Gemini API key---
+
+## Privacy
+
+
+
+- No personal info stored (emails, phones, etc. are redacted)
+
+- All history is public for demo purposes### Installation
+
+
+
+## Author
+
+
+
+Gaurang Dosar  ```bash## ⚠️ Important Medical Disclaimer![React](https://img.shields.io/badge/React-18-blue) ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue) ![Supabase](https://img.shields.io/badge/Supabase-Integrated-green)**AI Model:** Google Gemini 2.5 Flash  
+
+[github.com/GaurangDosar](https://github.com/GaurangDosar)
+
+git clone https://github.com/GaurangDosar/triage-tool.git
+
+---
+
 cd triage-tool
+
+**Disclaimer:** This tool is for informational purposes only. Not medical advice. For emergencies, call your local emergency services.
 
 npm install
 
