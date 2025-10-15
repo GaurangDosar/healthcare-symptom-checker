@@ -19,7 +19,7 @@ export const DisclaimerBanner = () => {
         <AlertCircle className="h-5 w-5 text-warning" />
         <AlertDescription className="ml-2 flex items-center justify-between flex-wrap gap-2">
           <span className="text-sm font-medium">
-            Educational only — not medical advice. For emergencies call local emergency services.
+            Educational only — not medical advice(made for assignment). For emergencies call local emergency services.
           </span>
           <Button
             variant="link"
@@ -37,7 +37,7 @@ export const DisclaimerBanner = () => {
             <DialogTitle>Important Medical Disclaimer</DialogTitle>
             <DialogDescription className="text-base space-y-4 pt-4">
               <p>
-                <strong>DISCLAIMER:</strong> This tool provides educational information only and is not medical advice. 
+                <strong>DISCLAIMER:</strong> This tool is made only for a specific assignment by Gaurang Dosar and is not medical advice. 
                 It does not replace a consultation with a licensed healthcare professional.
               </p>
               <p>

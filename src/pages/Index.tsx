@@ -6,7 +6,7 @@ import { DisclaimerBanner } from "@/components/DisclaimerBanner";
 import { SymptomForm } from "@/components/SymptomForm";
 import { ResultsView } from "@/components/ResultsView";
 import { HistoryView } from "@/components/HistoryView";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from "@/integrations/supabase/client-local";
 import { useToast } from "@/hooks/use-toast";
 import type { SymptomCheckRequest, SymptomCheckResponse } from "@/types/symptom";
 
@@ -17,23 +17,42 @@ const Index = () => {
   const { toast } = useToast();
 
   const handleSubmit = async (data: SymptomCheckRequest) => {
+    console.log('🚀 Submitting symptom check...', data);
     setIsLoading(true);
     try {
       const { data: responseData, error } = await supabase.functions.invoke('check-symptoms', {
         body: data
       });
 
+      console.log('📥 Received response:', { responseData, error });
+
       if (error) {
         console.error('Function error:', error);
+        let errorMessage = "Failed to analyze symptoms. Please try again.";
+        
+        // Provide more specific error messages
+        if (error.message) {
+          if (error.message.includes('fetch')) {
+            errorMessage = "Network error. Please check your internet connection.";
+          } else if (error.message.includes('unauthorized') || error.message.includes('401')) {
+            errorMessage = "Authentication error. Please check your configuration.";
+          } else if (error.message.includes('AI service')) {
+            errorMessage = "AI service is temporarily unavailable. Please try again later.";
+          } else {
+            errorMessage = error.message;
+          }
+        }
+        
         toast({
           title: "Error",
-          description: error.message || "Failed to analyze symptoms. Please try again.",
+          description: errorMessage,
           variant: "destructive"
         });
         return;
       }
 
-      if (responseData.error) {
+      if (responseData?.error) {
+        console.error('Response error:', responseData.error);
         toast({
           title: "Error",
           description: responseData.error,
@@ -42,13 +61,24 @@ const Index = () => {
         return;
       }
 
+      if (!responseData?.conditions || !Array.isArray(responseData.conditions)) {
+        console.error('Invalid response format:', responseData);
+        toast({
+          title: "Error",
+          description: "Received invalid response format. Please try again.",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      console.log('✅ Setting result with', responseData.conditions?.length, 'conditions');
       setResult(responseData);
       toast({
         title: "Analysis Complete",
         description: "Your symptoms have been analyzed successfully.",
       });
     } catch (err) {
-      console.error('Unexpected error:', err);
+      console.error('❌ Unexpected error:', err);
       toast({
         title: "Error",
         description: "An unexpected error occurred. Please try again.",
@@ -77,7 +107,6 @@ const Index = () => {
                 <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-primary-dark bg-clip-text text-transparent">
                   Healthcare Symptom Checker
                 </h1>
-                <p className="text-xs text-muted-foreground">Educational purposes only</p>
               </div>
             </div>
           </div>
@@ -131,7 +160,10 @@ const Index = () => {
             This is an educational tool only. Always consult qualified healthcare professionals for medical advice.
           </p>
           <p className="mt-2 text-xs">
-            Built with React, TypeScript, and OpenAI GPT-5-nano
+            Developed by <span className="font-semibold text-primary">Gaurang Dosar</span>
+          </p>
+          <p className="text-xs">
+            Built with React, TypeScript, and Google Gemini API
           </p>
         </div>
       </footer>

@@ -1,6 +1,8 @@
 # Healthcare Symptom Checker
 
-An educational AI-powered symptom checker built with React, TypeScript, Lovable Cloud, and OpenAI GPT-5-nano.
+**Developer:** Gaurang Dosar
+
+An educational symptom checker application built with React, TypeScript, and Google Gemini API.
 
 ## ⚠️ Important Medical Disclaimer
 
@@ -22,18 +24,38 @@ A web application that accepts free-text symptom descriptions and optional demog
 
 - **Frontend**: React 18 + TypeScript + Vite
 - **Styling**: Tailwind CSS + shadcn/ui components
-- **Backend**: Lovable Cloud (Supabase) with Edge Functions
-- **Database**: PostgreSQL via Supabase
-- **LLM**: OpenAI GPT-5-nano
+- **Backend**: Node.js Local Server (with optional Supabase Edge Functions)
+- **Database**: PostgreSQL via Supabase (optional)
+- **AI Model**: Google Gemini 2.5 Flash
 - **State Management**: TanStack Query
 - **Form Handling**: React Hook Form + Zod validation
 
 ## 🚀 Quick Start
 
+## 📁 Project Structure
+
+```
+triage-tool/
+├── src/
+│   ├── components/         # React components
+│   ├── pages/             # Page components
+│   ├── integrations/      # Supabase clients
+│   └── types/             # TypeScript types
+├── supabase/
+│   └── functions/         # Edge functions (for production)
+├── gemini-server-simple.mjs   # Local API server
+├── test-gemini.js            # Test Gemini API
+└── test-local-server.js      # Test local server
+```
+
+---
+
+## 🔧 Production Setup (Supabase)
+
 ### Prerequisites
 
 - Node.js 18+ and npm
-- OpenAI API key for GPT-5-nano
+- OpenAI API key for GPT-4o-mini
 
 ### Installation
 
@@ -49,16 +71,17 @@ npm install
 ```
 
 3. Set up environment variables:
-The project uses Lovable Cloud, which automatically provisions:
-- Supabase database
-- Edge Functions runtime
-- Authentication system
+Add your Gemini API key in `gemini-server-simple.mjs`:
+```javascript
+const GEMINI_API_KEY = 'your-api-key-here';
+```
 
-You need to add your OpenAI API key via the Lovable Cloud interface:
-- Go to Backend → Secrets
-- Add `OPENAI_API_KEY` with your API key value
+4. Start the backend server:
+```bash
+node gemini-server-simple.mjs
+```
 
-4. Start the development server:
+5. Start the development server (in a new terminal):
 ```bash
 npm run dev
 ```
@@ -77,7 +100,7 @@ The app will be available at `http://localhost:8080`
    - Mobile-responsive design
 
 2. **AI-Powered Analysis**
-   - GPT-5-nano integration via Edge Functions
+   - GPT-4o-mini integration via Edge Functions
    - Structured prompt with few-shot examples
    - Returns up to 4 ranked conditions with confidence scores
    - Provides safe, educational next steps
@@ -139,7 +162,7 @@ Analyzes symptoms and returns possible conditions with recommendations.
   "disclaimer": "DISCLAIMER: This tool provides educational information only...",
   "llm_metadata": {
     "provider": "openai",
-    "model": "gpt-5-nano-2025-08-07",
+    "model": "gpt-4o-mini",
     "prompt_version": "1.0"
   }
 }
@@ -238,17 +261,17 @@ The project includes:
 
 ## 🔄 Changing LLM Providers
 
-The Edge Function is configured to use OpenAI GPT-5-nano by default. To switch providers:
+The Edge Function is configured to use OpenAI GPT-4o-mini by default. To switch providers:
 
-1. Update the Edge Function code in `supabase/functions/check-symptoms/index.ts`
-2. Change the API endpoint and request format
-3. Update environment variables in Lovable Cloud → Backend → Secrets
+1. Update the server code in `gemini-server-simple.mjs`
+2. Change the MODEL constant and API endpoint
+3. Update the API key in the server file
 4. Adjust the prompt format if needed
 
 Example providers:
-- OpenAI (current)
+- Google Gemini (current)
+- OpenAI GPT
 - Anthropic Claude
-- Google Gemini (via Lovable AI)
 
 ## 📝 Demo Script
 
@@ -324,13 +347,7 @@ Example providers:
 
 ## 📦 Deployment
 
-### Via Lovable
-
-1. Click the "Publish" button in the Lovable interface
-2. Your app will be deployed automatically
-3. Custom domain can be added in Project → Settings → Domains
-
-### Manual Deployment
+### Frontend Deployment
 
 The app can be deployed to any static hosting service:
 
@@ -346,7 +363,15 @@ npm run build
 netlify deploy --prod
 ```
 
-**Note**: Edge Functions require Supabase/Lovable Cloud to be configured.
+### Backend Deployment
+
+Deploy the Node.js server (`gemini-server-simple.mjs`) to:
+- Heroku
+- Railway
+- Render
+- Any Node.js hosting service
+
+Or use Supabase Edge Functions for serverless deployment (see `supabase/functions/` directory).
 
 ## 🤝 Contributing
 

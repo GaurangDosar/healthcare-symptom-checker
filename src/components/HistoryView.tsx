@@ -15,9 +15,20 @@ export const HistoryView = () => {
         body: {}
       });
       
-      if (error) throw error;
+      if (error) {
+        console.error('History fetch error:', error);
+        throw new Error(error.message || 'Failed to fetch history');
+      }
+      
+      if (!data?.queries) {
+        console.error('Invalid history response:', data);
+        return [];
+      }
+      
       return data.queries as QueryHistory[];
-    }
+    },
+    retry: 1,
+    refetchOnWindowFocus: false,
   });
 
   if (isLoading) {

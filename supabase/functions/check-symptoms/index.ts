@@ -110,33 +110,38 @@ Deno.serve(async (req) => {
     // Build prompt
     const prompt = buildPrompt(symptoms, age, sex);
 
-    // Call OpenAI
-    const openAIKey = Deno.env.get('OPENAI_API_KEY');
-    if (!openAIKey) {
-      console.error('OPENAI_API_KEY not configured');
+    // Call Google Gemini
+    const geminiKey = Deno.env.get('GEMINI_API_KEY');
+    if (!geminiKey) {
+      console.error('GEMINI_API_KEY not configured');
       return new Response(
-        JSON.stringify({ error: 'AI service not configured' }),
+        JSON.stringify({ error: 'AI service not configured - Gemini API key missing' }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
-    console.log('Calling OpenAI with GPT-5-nano...');
-    const aiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+    console.log('Calling Google Gemini 2.5 Flash...');
+    const aiResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiKey}`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${openAIKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-5-nano-2025-08-07',
-        messages: [{ role: 'user', content: prompt }],
-        max_completion_tokens: 1000,
+        contents: [{
+          parts: [{
+            text: prompt
+          }]
+        }],
+        generationConfig: {
+          temperature: 0.7,
+          topP: 0.95,
+        },
       }),
     });
 
     if (!aiResponse.ok) {
       const errorText = await aiResponse.text();
-      console.error('OpenAI error:', aiResponse.status, errorText);
+      console.error('Gemini error:', aiResponse.status, errorText);
       return new Response(
         JSON.stringify({ error: 'AI service error', details: errorText }),
         { status: 502, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -144,15 +149,20 @@ Deno.serve(async (req) => {
     }
 
     const aiData = await aiResponse.json();
-    const rawText = aiData.choices?.[0]?.message?.content || '';
+    const rawText = aiData.candidates?.[0]?.content?.parts?.[0]?.text || '';
 
-    console.log('Raw AI response:', rawText);
+    console.log('Raw AI response:', rawText.substring(0, 200) + '...');
 
     // Parse JSON from response
     let parsedResponse;
     try {
+      // Remove markdown code blocks if present (```json ... ``` or ``` ... ```)
+      let cleanedText = rawText.trim();
+      cleanedText = cleanedText.replace(/^```json\s*/i, '').replace(/^```\s*/, '');
+      cleanedText = cleanedText.replace(/\s*```$/, '');
+      
       // Try to extract JSON from the response
-      const jsonMatch = rawText.match(/\{[\s\S]*\}/);
+      const jsonMatch = cleanedText.match(/\{[\s\S]*\}/);
       if (!jsonMatch) {
         throw new Error('No JSON found in response');
       }
@@ -165,8 +175,8 @@ Deno.serve(async (req) => {
 
       // Add metadata
       parsedResponse.llm_metadata = {
-        provider: 'openai',
-        model: 'gpt-5-nano-2025-08-07',
+        provider: 'google',
+        model: 'gemini-2.5-flash',
         prompt_version: '1.0'
       };
 

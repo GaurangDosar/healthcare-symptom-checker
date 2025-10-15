@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { AlertTriangle, CheckCircle2, Info, ChevronDown, ChevronUp, Code } from "lucide-react";
+import { AlertTriangle, CheckCircle2, Info, ChevronDown, ChevronUp, Code, AlertCircle } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import type { SymptomCheckResponse } from "@/types/symptom";
 
@@ -12,13 +12,109 @@ interface ResultsViewProps {
 
 export const ResultsView = ({ result }: ResultsViewProps) => {
   const [showRawJson, setShowRawJson] = useState(false);
+  const [expandedConditions, setExpandedConditions] = useState<Set<number>>(new Set());
+  const [expandedSteps, setExpandedSteps] = useState(false);
   
-  // Check if this is an emergency case
-  const hasEmergency = result.recommended_next_steps?.some(step => 
-    step.toLowerCase().includes('emergency') || 
-    step.toLowerCase().includes('911') ||
-    step.toLowerCase().includes('urgent')
-  );
+  // Determine emergency level and message based on conditions and recommendations
+  const getEmergencyInfo = () => {
+    if (!result.conditions || result.conditions.length === 0) return null;
+
+    // Check conditions and next steps for emergency keywords with strict context
+    const allText = [
+      ...result.conditions.map(c => c.name.toLowerCase() + ' ' + c.reasoning.toLowerCase()),
+      ...(result.recommended_next_steps || []).map(s => s.toLowerCase())
+    ].join(' ');
+
+    // Only show warning for TRULY serious indicators
+    // Critical: Requires immediate 911/emergency services
+    if (
+      allText.includes('call 911') || 
+      allText.includes('call 108') ||
+      allText.includes('call emergency') || 
+      allText.includes('life-threatening') ||
+      allText.includes('immediately call') ||
+      (allText.includes('emergency') && allText.includes('immediately'))
+    ) {
+      return {
+        title: 'Critical Emergency - Call 108 Now!!!',
+        description: 'Life-threatening symptoms require immediate emergency services',
+        level: 'critical'
+      };
+    } 
+    
+    // Emergency: Requires ER visit or urgent care TODAY
+    else if (
+      allText.includes('emergency room') || 
+      allText.includes('emergency department') || 
+      allText.includes('go to emergency') ||
+      allText.includes('visit emergency') ||
+      (allText.includes('immediate') && (allText.includes('medical attention') || allText.includes('medical care')))
+    ) {
+      return {
+        title: 'Emergency Medical Attention Required',
+        description: 'Visit emergency room or urgent care immediately',
+        level: 'emergency'
+      };
+    } 
+    
+    // Urgent: Requires same-day or next-day medical consultation
+    // BUT only if combined with serious context words
+    else if (
+      (allText.includes('urgent care') && !allText.includes('if symptoms worsen')) ||
+      (allText.includes('seek urgent') && allText.includes('medical')) ||
+      (allText.includes('same day') && allText.includes('medical'))
+    ) {
+      return {
+        title: 'Medical Attention Needed',
+        description: 'Consult a healthcare provider as soon as possible (same-day or next-day)',
+        level: 'urgent'
+      };
+    }
+
+    // Don't show warning for routine advice like "monitor symptoms" or "if worse, see doctor"
+    return null;
+  };
+
+  const emergencyInfo = getEmergencyInfo();
+  const hasEmergency = emergencyInfo !== null;
+
+  // Toggle condition expansion
+  const toggleCondition = (index: number) => {
+    const newExpanded = new Set(expandedConditions);
+    if (newExpanded.has(index)) {
+      newExpanded.delete(index);
+    } else {
+      newExpanded.add(index);
+    }
+    setExpandedConditions(newExpanded);
+  };
+
+  // Helper function to truncate text to 2 lines (approximately 140 characters)
+  const truncateText = (text: string, maxLength: number = 140) => {
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength) + '...';
+  };
+
+  // Helper function to highlight important medical terms
+  const highlightText = (text: string) => {
+    const importantTerms = [
+      'emergency', 'urgent', 'severe', 'immediate', 'critical', 'serious',
+      'fever', 'pain', 'bleeding', 'difficulty breathing', 'chest pain',
+      'symptoms', 'diagnosis', 'treatment', 'consult', 'healthcare',
+      '911', 'doctor', 'hospital', 'medical', 'condition'
+    ];
+    
+    let highlightedText = text;
+    importantTerms.forEach(term => {
+      const regex = new RegExp(`\\b${term}\\b`, 'gi');
+      highlightedText = highlightedText.replace(
+        regex, 
+        match => `<strong class="font-semibold text-foreground">${match}</strong>`
+      );
+    });
+    
+    return highlightedText;
+  };
 
   const getConfidenceColor = (score: number) => {
     if (score >= 0.7) return "bg-secondary text-secondary-foreground";
@@ -28,16 +124,40 @@ export const ResultsView = ({ result }: ResultsViewProps) => {
 
   return (
     <div className="w-full max-w-4xl mx-auto space-y-6">
-      {/* Emergency Warning */}
-      {hasEmergency && (
-        <Card className="border-warning bg-warning/10 animate-pulse" style={{ boxShadow: 'var(--shadow-warning)' }}>
+      {/* Emergency Warning - Dynamic based on severity */}
+      {hasEmergency && emergencyInfo && (
+        <Card 
+          className={`
+            ${emergencyInfo.level === 'critical' ? 'border-destructive bg-destructive/15 animate-pulse' : 
+              emergencyInfo.level === 'emergency' ? 'border-warning bg-warning/10 animate-pulse' :
+              emergencyInfo.level === 'urgent' ? 'border-warning bg-warning/5' :
+              'border-primary bg-primary/5'
+            }
+            hover:scale-[1.02] transition-all duration-300 hover:shadow-2xl cursor-pointer
+          `}
+          style={{ boxShadow: 'var(--shadow-warning)' }}
+        >
           <CardHeader>
             <div className="flex items-center gap-3">
-              <AlertTriangle className="h-8 w-8 text-warning" />
+              <AlertTriangle 
+                className={`h-8 w-8 ${
+                  emergencyInfo.level === 'critical' ? 'text-destructive' : 'text-warning'
+                }`} 
+              />
               <div>
-                <CardTitle className="text-warning text-xl">Emergency Symptoms Detected</CardTitle>
-                <CardDescription className="text-warning/80 font-semibold">
-                  Seek immediate medical attention
+                <CardTitle 
+                  className={`text-xl ${
+                    emergencyInfo.level === 'critical' ? 'text-destructive' : 'text-warning'
+                  }`}
+                >
+                  {emergencyInfo.title}
+                </CardTitle>
+                <CardDescription 
+                  className={`font-semibold ${
+                    emergencyInfo.level === 'critical' ? 'text-destructive/80' : 'text-warning/80'
+                  }`}
+                >
+                  {emergencyInfo.description}
                 </CardDescription>
               </div>
             </div>
@@ -46,90 +166,147 @@ export const ResultsView = ({ result }: ResultsViewProps) => {
       )}
 
       {/* Conditions */}
-      <Card className="shadow-lg" style={{ boxShadow: 'var(--shadow-medical)' }}>
+      <Card className="shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-[1.01] hover:border-primary/30" style={{ boxShadow: 'var(--shadow-medical)' }}>
         <CardHeader>
           <CardTitle className="text-xl flex items-center gap-2">
             <Info className="h-5 w-5 text-primary" />
             Possible Conditions
           </CardTitle>
           <CardDescription>
-            Ranked by likelihood based on provided symptoms (for educational purposes only)
+            Ranked by likelihood based on provided symptoms
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          {result.conditions?.map((condition, index) => (
-            <div 
-              key={index} 
-              className="p-4 rounded-lg border bg-card hover:bg-accent/5 transition-all"
-            >
-              <div className="flex items-start justify-between gap-4 flex-wrap">
-                <div className="flex-1 space-y-2">
-                  <div className="flex items-center gap-3 flex-wrap">
-                    <h3 className="font-semibold text-lg">{condition.name}</h3>
-                    <Badge variant="outline" className={getConfidenceColor(condition.confidence_score)}>
-                      {(condition.confidence_score * 100).toFixed(0)}% confidence
-                    </Badge>
+          {result.conditions?.map((condition, index) => {
+            const isExpanded = expandedConditions.has(index);
+            const shouldTruncate = condition.reasoning.length > 140;
+            const displayText = isExpanded ? condition.reasoning : truncateText(condition.reasoning);
+            
+            return (
+              <div 
+                key={index} 
+                className="p-4 rounded-lg border bg-card hover:bg-accent/5 transition-all duration-300 hover:shadow-xl hover:scale-[1.02] hover:border-primary/50 hover:z-10 relative cursor-pointer"
+              >
+                <div className="flex items-start justify-between gap-4 flex-wrap">
+                  <div className="flex-1 space-y-2">
+                    <div className="flex items-center gap-3 flex-wrap">
+                      <h3 className="font-semibold text-xl">{condition.name}</h3>
+                      <Badge variant="outline" className={getConfidenceColor(condition.confidence_score)}>
+                        {(condition.confidence_score * 100).toFixed(0)}% confidence
+                      </Badge>
+                    </div>
+                    <div 
+                      className="text-base text-muted-foreground leading-relaxed"
+                      dangerouslySetInnerHTML={{ __html: highlightText(displayText) }}
+                    />
+                    {shouldTruncate && (
+                      <Button
+                        variant="link"
+                        size="sm"
+                        onClick={() => toggleCondition(index)}
+                        className="p-0 h-auto font-normal text-primary"
+                      >
+                        {isExpanded ? (
+                          <>
+                            <ChevronUp className="h-4 w-4 mr-1" />
+                            Show less
+                          </>
+                        ) : (
+                          <>
+                            <ChevronDown className="h-4 w-4 mr-1" />
+                            Show more
+                          </>
+                        )}
+                      </Button>
+                    )}
                   </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {condition.reasoning}
-                  </p>
-                </div>
-                <div className="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 text-primary font-bold">
-                  #{condition.probability_rank}
+                  <div className="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 text-primary font-bold">
+                    #{condition.probability_rank}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </CardContent>
       </Card>
 
       {/* Recommended Next Steps */}
-      <Card className="shadow-lg" style={{ boxShadow: 'var(--shadow-medical)' }}>
+      <Card className="shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-[1.01] hover:border-warning/30" style={{ boxShadow: 'var(--shadow-medical)' }}>
         <CardHeader>
           <CardTitle className="text-xl flex items-center gap-2">
-            <CheckCircle2 className="h-5 w-5 text-secondary" />
+            <AlertCircle className="h-5 w-5 text-warning" />
             Recommended Next Steps
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <ul className="space-y-3">
-            {result.recommended_next_steps?.map((step, index) => (
+          <ul className="space-y-4">
+            {result.recommended_next_steps?.slice(0, expandedSteps ? undefined : 2).map((step, index) => (
               <li key={index} className="flex items-start gap-3">
-                <span className="flex items-center justify-center w-6 h-6 rounded-full bg-secondary/20 text-secondary text-sm font-semibold mt-0.5">
+                <span className="flex items-center justify-center w-7 h-7 rounded-full bg-secondary/20 text-secondary text-sm font-semibold mt-0.5">
                   {index + 1}
                 </span>
-                <span className="flex-1 text-sm leading-relaxed">{step}</span>
+                <span 
+                  className="flex-1 text-base leading-relaxed"
+                  dangerouslySetInnerHTML={{ __html: highlightText(step) }}
+                />
               </li>
             ))}
           </ul>
+          {result.recommended_next_steps && result.recommended_next_steps.length > 2 && (
+            <Button
+              variant="link"
+              size="sm"
+              onClick={() => setExpandedSteps(!expandedSteps)}
+              className="mt-4 p-0 h-auto font-normal text-primary"
+            >
+              {expandedSteps ? (
+                <>
+                  <ChevronUp className="h-4 w-4 mr-1" />
+                  Show less
+                </>
+              ) : (
+                <>
+                  <ChevronDown className="h-4 w-4 mr-1" />
+                  Show {result.recommended_next_steps.length - 2} more steps
+                </>
+              )}
+            </Button>
+          )}
         </CardContent>
       </Card>
 
       {/* Additional Information Needed */}
-      {result.needed_info && result.needed_info.length > 0 && (
-        <Card className="shadow-lg border-primary/30">
+      {result.needed_info && (
+        <Card className="shadow-lg border-primary/30 hover:shadow-2xl transition-all duration-300 hover:scale-[1.01] hover:border-primary/50">
           <CardHeader>
             <CardTitle className="text-xl flex items-center gap-2">
               <Info className="h-5 w-5 text-primary" />
-              Additional Information Helpful
+              Additional Information Needed
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <ul className="space-y-2">
-              {result.needed_info.map((info, index) => (
-                <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
-                  <span className="text-primary">•</span>
-                  {info}
-                </li>
-              ))}
-            </ul>
+            {Array.isArray(result.needed_info) ? (
+              <ul className="space-y-2">
+                {result.needed_info.map((info, index) => (
+                  <li key={index} className="text-base text-muted-foreground flex items-start gap-2">
+                    <span className="text-primary">•</span>
+                    <span dangerouslySetInnerHTML={{ __html: highlightText(info) }} />
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p 
+                className="text-base text-muted-foreground"
+                dangerouslySetInnerHTML={{ __html: highlightText(result.needed_info) }}
+              />
+            )}
           </CardContent>
         </Card>
       )}
 
       {/* Raw JSON Viewer (for grading/debugging) */}
       <Collapsible open={showRawJson} onOpenChange={setShowRawJson}>
-        <Card className="border-dashed">
+        <Card className="border-dashed hover:shadow-lg transition-all duration-300 hover:scale-[1.005] hover:border-accent/50">
           <CollapsibleTrigger asChild>
             <Button 
               variant="ghost" 
