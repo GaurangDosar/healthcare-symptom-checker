@@ -24,11 +24,13 @@ Note that this project is serverless since we are using Supabase Edge functions.
 
 ## 📺 Demo Video
 
-[![Watch Demo](https://img.youtube.com/vi/AI2LlhanYw8/maxresdefault.jpg)](https://youtu.be/AI2LlhanYw8)
+<div align="center">
+  <a href="https://youtu.be/AI2LlhanYw8">
+    <img src="https://img.youtube.com/vi/AI2LlhanYw8/maxresdefault.jpg" alt="Demo Video" style="width:100%;max-width:720px;">
+  </a>
+</div>
 
-*Click the image above to watch the full demo*
-
-
+> **Note:** Click the thumbnail to watch the video. GitHub doesn't support direct video embedding, but the thumbnail links to YouTube.
 
 ## Features
 ...
