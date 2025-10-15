@@ -44,9 +44,32 @@ export const HistoryView = () => {
   if (error) {
     return (
       <Card className="w-full max-w-4xl mx-auto border-destructive">
-        <CardContent className="flex items-center gap-3 py-6">
-          <AlertCircle className="h-5 w-5 text-destructive" />
-          <p className="text-destructive">Failed to load history. Please try again.</p>
+        <CardContent className="py-6 space-y-3">
+          <div className="flex items-center gap-3">
+            <AlertCircle className="h-5 w-5 text-destructive" />
+            <p className="text-destructive font-semibold">Failed to load history</p>
+          </div>
+          <p className="text-sm text-muted-foreground">
+            {error instanceof Error ? error.message : 'Unknown error'}
+          </p>
+          <div className="text-xs text-muted-foreground bg-muted p-3 rounded">
+            <p className="font-semibold mb-2">Possible causes:</p>
+            <ul className="list-disc list-inside space-y-1">
+              <li>The <code>get-history</code> Edge Function is not deployed</li>
+              <li>Database table is not created</li>
+              <li>Network connection issue</li>
+            </ul>
+            <p className="mt-3">
+              Check the browser console (F12) for detailed error information.
+            </p>
+          </div>
+          <Button 
+            variant="outline" 
+            onClick={() => window.location.reload()}
+            className="mt-2"
+          >
+            Try Again
+          </Button>
         </CardContent>
       </Card>
     );
