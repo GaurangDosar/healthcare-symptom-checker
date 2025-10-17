@@ -10,6 +10,8 @@ Note that this project is serverless since we are using Supabase Edge functions.
 🌐 **Live Demo:** [[Click here](https://healthcare-symptom-checker-new.vercel.app/)]A web app that analyzes symptoms using AI and provides possible conditions with next steps. Built with React, TypeScript, Supabase, and Google Gemini AI.
 
 
+**WARNING** 
+The website uses Supabase edge functions to give responses from LLM. So first visit Supabase, get your Supabase URL and ANON key and create edge functions check-symptoms and get-history. Without these, you won't be able to get responses.
 
 
 
